@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Auction.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,6 +31,8 @@ namespace Auction
                 options.LoginPath = "";
                 options.LogoutPath = "/Logout";
             });
+            services.AddDbContext<AuctionContext>(
+                options => { options.UseSqlServer("Auction"); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +62,9 @@ namespace Auction
                     name: "areas",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    "controllers",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
