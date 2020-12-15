@@ -31,8 +31,6 @@ namespace Auction
                 options.LoginPath = "";
                 options.LogoutPath = "/Logout";
             });
-            services.AddDbContext<AuctionContext>(
-                options => { options.UseSqlServer("Auction"); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

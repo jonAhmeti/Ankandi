@@ -22,4 +22,8 @@
     <Folder Include="Areas\Bidder\Views\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Auction.BLL\Auction.BLL.csproj" />
+  </ItemGroup>
+
 </Project>
