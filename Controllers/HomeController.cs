@@ -8,12 +8,10 @@ namespace Auction.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly BLL.Items _bllItems;
 
-        public HomeController(ILogger<HomeController> logger, BLL.Items bllItems)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _bllItems = bllItems;
         }
 
         [Route("")]
