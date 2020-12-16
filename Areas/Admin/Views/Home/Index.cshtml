@@ -2,105 +2,108 @@
 @{
     ViewData["Title"] = "Index";
 }
-<style>
-    /* box-shadow */
-    ol.gradient-list > li, ol.gradient-list > li::before {
-        box-shadow: 0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.05), 0 0.5rem 1.125rem rgba(75, 0, 0, 0.05);
-    }
+    <style>
+        /* box-shadow */
+        .customList ol.gradient-list > li, ol.gradient-list > li::before {
+            box-shadow: 0.25rem 0.25rem 0.6rem rgba(0, 0, 0, 0.05), 0 0.5rem 1.125rem rgba(75, 0, 0, 0.05);
+        }
 
-    /*** STYLE ***/
+        /*** STYLE ***/
 
-    ol.gradient-list {
-        counter-reset: gradient-counter;
-        list-style: none;
-        margin: 1.75rem 0;
-        padding-left: 1rem;
-    }
+        .customList ol.gradient-list {
+            counter-reset: gradient-counter;
+            list-style: none;
+            padding: 1.75rem 0;
+            padding-left: 1rem;
+            margin: 0;
+        }
 
-        ol.gradient-list > li {
-            background: linear-gradient(135deg, #967f73 0%, #3a312c 100%);
-            border-radius: 0 0 0 0.5rem;
-            counter-increment: gradient-counter;
-            margin-top: 1rem;
-            min-height: 3rem;
-            padding: 1rem 1rem 1rem 3rem;
-            position: relative;
+        .customList ol.gradient-list > li {
+                background: linear-gradient(135deg, #967f73 0%, #3a312c 100%);
+                border-radius: 0 0 0 0.5rem;
+                counter-increment: gradient-counter;
+                margin-top: 1rem;
+                position: relative;
+                color: #ffffff;
+                white-space: nowrap;
+            }
+
+        .customList ol.gradient-list > li::before, ol.gradient-list > li::after {
+                    background: linear-gradient(135deg, #967f73 0%, #3a312c 100%);
+                    border-radius: 1rem 1rem 0 1rem;
+                    content: '';
+                    height: 3rem;
+                    left: -1rem;
+                    overflow: hidden;
+                    position: absolute;
+                    top: -1rem;
+                    width: 3rem;
+                }
+
+        .customList ol.gradient-list > li::before {
+                    align-items: flex-end;
+                    content: counter(gradient-counter);
+                    color: #1d1f20;
+                    display: flex;
+                    font: 900 1.5em/1 'Montserrat';
+                    justify-content: flex-end;
+                    padding: 0.125em 0.25em;
+                    z-index: 1;
+                }
+
+        .customList ol.gradient-list > li:nth-child(10n+1):before {
+                    background: linear-gradient(135deg, rgba(150, 127, 115, 0.2) 0%, rgba(76, 64, 57, 0.2) 100%);
+                }
+
+
+        .customList ol.gradient-list > li + li {
+                    margin-top: 2rem;
+                }
+
+        .customList ol a {
+            justify-content: center;
+            align-items: center;
             color: #ffffff;
-        }
-
-        ol.gradient-list > li::before, ol.gradient-list > li::after {
-            background: linear-gradient(135deg, #967f73 0%, #3a312c 100%);
-            border-radius: 1rem 1rem 0 1rem;
-            content: '';
-            height: 3rem;
-            left: -1rem;
-            overflow: hidden;
-            position: absolute;
-            top: -1rem;
-            width: 3rem;
-        }
-
-    ol.gradient-list > li::before {
-        align-items: flex-end;
-        content: counter(gradient-counter);
-        color: #1d1f20;
-        display: flex;
-        font: 900 1.5em/1 'Montserrat';
-        justify-content: flex-end;
-        padding: 0.125em 0.25em;
-        z-index: 1;
-    }
-
-        ol.gradient-list > li:nth-child(10n+1):before {
-            background: linear-gradient(135deg, rgba(150, 127, 115, 0.2) 0%, rgba(76, 64, 57, 0.2) 100%);
-        }
-
-
-    ol.gradient-list > li + li {
-        margin-top: 2rem;
-    }
-
-    ol a {
-        text-align: center;
-        color: #ffffff;
-        font-family: 'Raleway', sans-serif;
-        text-decoration: none;
-        display: block;
-        width: 100%;
-        height: 100%;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-        ol a:hover {
-            color: #1d1f20;
+            font-family: 'Raleway', sans-serif;
             text-decoration: none;
-            text-shadow: 1px 1px 3px rgb(71, 50, 36);
+            display: flex;
+            width: 100%;
+            height: 100%;
+            min-height: 50px;
+            min-width: 250px;
+            text-decoration: none;
+            cursor: pointer;
         }
 
-    ol li:hover {
-        color: #ffffff;
-        background: linear-gradient(135deg, rgba(41, 31, 15, 0) 10%,rgba(71, 50, 36, 0.8) 100% );
-    }
+            .customList ol a:hover {
+                color: #ffff;
+                text-decoration: none;
+                text-shadow: 1px 1px 3px rgb(71, 50, 36);
+            }
 
-    ol li a:hover {
-        box-shadow: 6px 0 10px rgba(71, 50, 36, 0.8);
-        overflow: visible;
-    }
-    ol li {
-        overflow: visible;
-    }
-    
-    .listContainer {
-        box-shadow: inset 0 0 1em black;
-        width: 20%;
-    }
-</style>
+        .customList ol li:hover {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(41, 31, 15, 0) 10%,rgba(71, 50, 36, 0.8) 100% );
+        }
+
+        .customList ol li a:hover {
+            overflow: visible;
+        }
+
+        .customList ol li {
+            overflow: visible;
+        }
+
+        .customList .listContainer {
+            box-shadow: inset 0 0 1em black;
+            width: 20%;
+        }
+    </style>
 
 <div class="h-100 d-flex flex-row">
     <div class="w-100 h-100"></div>
-    <div class="pl-2 bg-dark h-100 listContainer">
-        <ol class="gradient-list">
+    <div class="pl-2 bg-dark h-100 listContainer customList">
+        <ol class="gradient-list customList d-flex flex-column h-100">
             <li><a asp-area="Admin" asp-controller="Auction" asp-action="Index">Crud Auction</a></li>
             <li><a asp-area="Admin" asp-controller="Auction" asp-action="Index">Crud Event</a></li>
             <li><a asp-area="Admin" asp-controller="Auction" asp-action="Index">Crud Item</a></li>

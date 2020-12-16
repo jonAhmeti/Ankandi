@@ -18,11 +18,12 @@ body {
 }
 
 #_login .container {
-    height: 200vh;
+    height: 200%;
     background-image: url("/css/Home/pexels-sora-shimazaki-5669602.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    position: absolute;
 }
 
 #_login .modal {

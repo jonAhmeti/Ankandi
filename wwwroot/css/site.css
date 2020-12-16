@@ -28,7 +28,7 @@ body::-webkit-scrollbar-thumb {
 
 
 #_layoutHeader {
-    height: 75px;
+    min-height: 75px;
     background-color: #090c08;
 }
 
