@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Auction.Areas.Bidder.Controllers
 {
+    [Area("Bidder")]
+    [Route("Bidder")]
     public class HomeController : Controller
     {
         public IActionResult Index()

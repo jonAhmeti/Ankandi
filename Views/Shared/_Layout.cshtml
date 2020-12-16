@@ -5,46 +5,46 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Auction</title>
-    <link rel="stylesheet" href="lib/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header id="_layoutHeader" class="container-fluid d-flex align-items-stretch justify-content-between">
-        <div class="d-flex align-items-center">
-            <a class="navbar-brand nav-item">
-                <i class="fas fa-hand-holding-usd"></i>
-                Ankandi
+<header id="_layoutHeader" class="container-fluid d-flex align-items-stretch justify-content-between">
+    <div class="d-flex align-items-center">
+        <a class="navbar-brand nav-item">
+            <i class="fas fa-hand-holding-usd"></i>
+            Ankandi
+        </a>
+    </div>
+    <div id="searchWrapper" class="d-flex align-items-center">
+        <form class="w-100 input-group">
+            <input name="item" class="form-control" placeholder="Search items..."/>
+            <a class="input-group-append input-group-text border-0">
+                <i class="fas fa-search"></i>
             </a>
-        </div>
-        <div id="searchWrapper" class="d-flex align-items-center">
-            <form class="w-100 input-group">
-                <input name="item" class="form-control" placeholder="Search items..."/>
-                <a class="input-group-append input-group-text border-0">
-                    <i class="fas fa-search"></i>
-                </a>
-            </form>
-        </div>
-        @{
-            if (User.Identity.IsAuthenticated)
-            {
-                <a asp-controller="@User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role).Value" class="d-flex align-items-center">
-                    <i class="fas fa-user-circle fa-2x mr-2"></i>
-                    Profile
-                </a>
-            }
-            else
-            {
-                <a class="d-flex align-items-center">
-                    <i class="fas fa-user-circle fa-2x mr-2"></i>
-                    Profile
-                </a>
-            }
+        </form>
+    </div>
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            <a asp-area="@User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value" asp-controller="Home" asp-action="Index" class="d-flex align-items-center">
+                <i class="fas fa-user-circle fa-2x mr-2"></i>
+                @User.Identity.Name
+            </a>
         }
-    </header>
-    <main>
-        @RenderBody()
-    </main>
-    @RenderSection("Scripts", required: false)
+        else
+        {
+            <a class="d-flex align-items-center">
+                <i class="fas fa-user-circle fa-2x mr-2"></i>
+                Profile
+            </a>
+        }
+    }
+</header>
+<main>
+    @RenderBody()
+</main>
+@RenderSection("Scripts", required: false)
 </body>
 </html>

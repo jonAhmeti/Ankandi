@@ -5,6 +5,8 @@
 body {
     background-color: #ffffff;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Scrollbar Styling Starts Here (not supported on firefox)' */
@@ -33,7 +35,7 @@ body::-webkit-scrollbar-thumb {
     #_layoutHeader a { color: #ffffff; }
 
         #_layoutHeader a:hover {
-            color: #98ce00;
+            color: #7d695e;
             text-decoration: none;
             cursor: pointer;
         }

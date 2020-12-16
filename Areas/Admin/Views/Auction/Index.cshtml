@@ -1,0 +1,69 @@
+﻿@using System.Globalization
+@model IEnumerable<Auction.BO.AuctionData>
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .cardDiv {
+        max-height: 200px;
+        background: linear-gradient(90deg, #3a312c 100%, #967f73 100%, #3a312c 100%);
+        overflow-x: auto;
+    }
+    .card {
+        width: 600px;
+        white-space: nowrap;
+        box-shadow: 0 0 1em black;
+    }
+    label {
+        margin: 0;
+    }
+    .crud {
+        border-radius: 20px 20px 20px 20px;
+        border-bottom: 5px solid #967f73;
+        border-top: 1px solid #3a312c;
+    }
+</style>
+
+<div class="h-100 w-100">
+    <div class="cardDiv py-3 d-flex flex-row h-auto">
+        @{
+            foreach (var auction in Model)
+            {
+                <div class="card mx-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Auction Id @auction.Id</h5>
+                        <p class="card-text">Start Date: @auction.StartDate.ToString()</p>
+                        <p class="card-text">End Date: @auction.EndDate.ToString()</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="d-flex flex-column">
+        <div class="d-flex p-2 mt-5 crud">
+            <div class="d-flex flex-column w-25 align-items-center justify-content-center border-right border-dark">
+                <label>Create an auction</label>
+            </div>
+            <div class="d-flex w-75 justify-content-center">
+                <form class="d-flex flex-column">
+                    <input class="form-control" placeholder="Start date" />
+                    <input class="form-control" placeholder="End date" />
+                    <button class="btn btn-outline-primary">Create</button>
+                </form>
+            </div>
+        </div>
+        <div class="d-flex p-2 mt-5 crud">
+            <div class="d-flex flex-column w-25 align-items-center justify-content-center border-right border-dark">
+                <label>Create an auction</label>
+            </div>
+            <div class="d-flex w-75 justify-content-center">
+                <form class="d-flex flex-column">
+                    <input class="form-control" placeholder="Start date" />
+                    <input class="form-control" placeholder="End date" />
+                    <button class="btn btn-outline-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -19,7 +19,6 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Bidder\Data\" />
     <Folder Include="Areas\Bidder\Models\" />
-    <Folder Include="Areas\Bidder\Views\" />
   </ItemGroup>
 
   <ItemGroup>
