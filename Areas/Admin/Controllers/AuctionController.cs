@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Auction.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auction.Areas.Admin.Controllers
@@ -18,7 +19,14 @@ namespace Auction.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _bllAuctionData.GetAllAsync());
+            return View(Mapper.AuctionDataMap(await _bllAuctionData.GetAllAsync()));
+        }
+
+
+        [HttpPost("Create")]
+        public async Task<IActionResult> Create(AuctionData obj)
+        {
+            return RedirectToAction("Index");
         }
     }
 }

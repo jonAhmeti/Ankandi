@@ -1,72 +1,88 @@
-﻿@using System.Globalization
-@model IEnumerable<Auction.BO.AuctionData>
+﻿@model IEnumerable<AuctionData>
 @{
     ViewData["Title"] = "Index";
 }
 <style>
-    .cardDiv {
-        max-height: 200px;
-        background: linear-gradient(90deg, #3a312c 100%, #967f73 100%, #3a312c 100%);
-        overflow-x: auto;
+    tbody tr:hover {
+        box-shadow: 0 0 10px 1px rgba(0,0,0,0.2);
     }
-    .card {
-        width: 600px;
-        white-space: nowrap;
-        box-shadow: 0 0 1em black;
+
+    #auctionsTable td, th {
+        text-align: center;
+        vertical-align: middle;
+        font-family: Calibri;
     }
-    label {
-        margin: 0;
-    }
-    .crud {
-        border-radius: 20px 20px 20px 20px;
-        border-bottom: 5px solid #967f73;
-        border-top: 1px solid #3a312c;
+
+    #auctionsTable th {
+        position: sticky;
+        top: 0;
     }
 </style>
 <div class="h-100 w-100">
-    <div class="cardDiv py-3 d-flex flex-row h-auto">
-        @{
-            foreach (var auction in Model)
-            {
-                <div class="card mx-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Auction Id @auction.Id</h5>
-                        <p class="card-text">Start Date: @auction.StartDate.ToString()</p>
-                        <p class="card-text">End Date: @auction.EndDate.ToString()</p>
+    <div class="d-flex container-fluid py-5 justify-content-between">
+        <a class="badge-dark badge-pill text-decoration-none py-2" data-toggle="modal" data-target="#createModal">
+            Create a new auction
+        </a>
+        <a asp-controller="Home" asp-action="Index" class="badge-dark badge-pill text-decoration-none py-2">
+            Back to admin page
+        </a>
+    </div>
+    <div>
+        <table id="auctionsTable" class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(m => m.Id)</th>
+                <th>@Html.DisplayNameFor(m => m.StartDate)</th>
+                <th>@Html.DisplayNameFor(m => m.EndDate)</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => item.Id)</td>
+                        <td>@Html.DisplayFor(m => item.StartDate)</td>
+                        <td>@Html.DisplayFor(m => item.EndDate)</td>
+                        <td class="d-flex justify-content-around">
+                            <a asp-action="Edit" class="text-decoration-none">Edit</a>
+                            <a asp-action="Delete" class="text-decoration-none m-0">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+    <!--Div container for Modals-->
+    <div>
+        <!--Div container for Create Modal-->
+        <div>
+            <!-- Modal -->
+            <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Create a new auction</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @await Html.PartialAsync("_AuctionDataForm", new AuctionData()
+                            {
+                                StartDate = DateTime.Now,
+                                EndDate = DateTime.Now.AddDays(1)
+                            })
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
-            }
-        }
-    </div>
-    <div class="d-flex flex-column">
-        <div class="d-flex p-2 mt-5 crud">
-            <div class="d-flex flex-column w-25 align-items-center justify-content-center border-right border-dark">
-                <label>Create an auction</label>
-            </div>
-            <div class="d-flex w-75 justify-content-center">
-                <form class="d-flex flex-column">
-                    <input class="form-control" placeholder="Start date" />
-                    <input class="form-control" placeholder="End date" />
-                    <button class="btn btn-outline-primary">Create</button>
-                </form>
-            </div>
-        </div>
-        <div class="d-flex p-2 mt-5 crud">
-            <div class="d-flex flex-column w-25 align-items-center justify-content-center border-right border-dark">
-                <label>Edit an auction</label>
-            </div>
-            <div class="d-flex w-75 justify-content-around px-5">
-                <form class="d-flex flex-column">
-                    <input class="form-control" placeholder="Start date" />
-                    <input class="form-control" placeholder="End date" />
-                    <button class="btn btn-outline-primary">Edit</button>
-                </form>
-                <div class="">
-                    @Html.DropDownList("AuctionId", new SelectList(Model,
-                        "Id", "Id"),
-                        new {@class = "btn btn-default btn-toggle form-control shadow-sm mb-5 bg-white rounded"})
-                </div>
             </div>
         </div>
     </div>
+
 </div>

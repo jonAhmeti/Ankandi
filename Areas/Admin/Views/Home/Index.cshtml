@@ -13,12 +13,12 @@
         .customList ol.gradient-list {
             counter-reset: gradient-counter;
             list-style: none;
-            padding: 1.75rem 0;
-            padding-left: 1rem;
+            padding-left: 0;
             margin: 0;
+            box-shadow: inset 5px 1px 10px black;
         }
 
-        .customList ol.gradient-list > li {
+            .customList ol.gradient-list > li {
                 background: linear-gradient(135deg, #967f73 0%, #3a312c 100%);
                 border-radius: 0 0 0 0.5rem;
                 counter-increment: gradient-counter;
@@ -26,6 +26,7 @@
                 position: relative;
                 color: #ffffff;
                 white-space: nowrap;
+                box-shadow: inset 5px 0px 10px black;
             }
 
         .customList ol.gradient-list > li::before, ol.gradient-list > li::after {
@@ -102,7 +103,7 @@
 
 <div class="h-100 d-flex flex-row">
     <div class="w-100 h-100"></div>
-    <div class="pl-2 bg-dark h-100 listContainer customList">
+    <div class="bg-dark h-100 listContainer customList">
         <ol class="gradient-list customList d-flex flex-column h-100">
             <li><a asp-area="Admin" asp-controller="Auction" asp-action="Index">Crud Auction</a></li>
             <li><a asp-area="Admin" asp-controller="Auction" asp-action="Index">Crud Event</a></li>

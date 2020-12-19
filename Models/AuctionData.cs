@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Auction.Models
 {
-    public partial class AuctionData
+    public class AuctionData
     {
-        public AuctionData()
-        {
-            BidHistory = new HashSet<BidHistory>();
-            Event = new HashSet<Event>();
-            WithdrawHistory = new HashSet<WithdrawHistory>();
-        }
-
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        [DisplayName("Start date")]
+        public DateTime StartDate { get; set; }
+        [DisplayName("End date")]
+        public DateTime EndDate { get; set; }
         public int Id { get; set; }
-        public int NoItemsSold { get; set; }
-
-        public virtual ICollection<BidHistory> BidHistory { get; set; }
-        public virtual ICollection<Event> Event { get; set; }
-        public virtual ICollection<WithdrawHistory> WithdrawHistory { get; set; }
+        public new string ToString => $"Starts: {StartDate.ToShortDateString()} Ends: {EndDate.ToShortDateString()}";
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Auction.BLL;
@@ -43,7 +42,6 @@ namespace Auction.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(string username, string password)
         {
-            string area;
             var user = await _bllUsers.GetByUsernameAsync(username);
             if (user != null && user.Password == password)
             {
@@ -57,7 +55,7 @@ namespace Auction.Controllers
                 await HttpContext.SignInAsync(claimsPrincipal);
             }
 
-            area = user?.RoleId == 1 ? "Admin" : "Bidder";
+            var area = user?.RoleId == 1 ? "Admin" : "Bidder";
 
             return RedirectToAction("Index", "Home", new { area });
         }
