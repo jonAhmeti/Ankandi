@@ -17,6 +17,7 @@ namespace Auction.Areas.Admin.Controllers
         {
             _bllAuctionData = bllAuctionData;
         }
+
         public async Task<IActionResult> Index()
         {
             return View(Mapper.AuctionDataMap(await _bllAuctionData.GetAllAsync()));
@@ -26,7 +27,23 @@ namespace Auction.Areas.Admin.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create(AuctionData obj)
         {
+            await _bllAuctionData.AddAsync(new BO.AuctionData()
+            {
+                StartDate = obj.StartDate,
+                EndDate = obj.EndDate
+            });
             return RedirectToAction("Index");
+        }
+
+        [HttpGet("Edit")]
+        public async Task<PartialViewResult> Edit(int id)
+        {
+            var obj = await _bllAuctionData.GetAsync(id);
+            return PartialView("AuctionData/_AuctionDataEditForm", new AuctionData()
+            {
+                StartDate = DateTime.Parse(obj.StartDate.ToString()),
+                EndDate = DateTime.Parse(obj.EndDate.ToString())
+            });
         }
     }
 }
