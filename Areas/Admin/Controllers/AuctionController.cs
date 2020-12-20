@@ -39,11 +39,22 @@ namespace Auction.Areas.Admin.Controllers
         public async Task<PartialViewResult> Edit(int id)
         {
             var obj = await _bllAuctionData.GetAsync(id);
-            return PartialView("AuctionData/_AuctionDataEditForm", new AuctionData()
+            return PartialView("AuctionDataPartial/_AuctionDataEditForm", new AuctionData()
             {
                 StartDate = DateTime.Parse(obj.StartDate.ToString()),
                 EndDate = DateTime.Parse(obj.EndDate.ToString())
             });
+        }
+
+        [HttpPost("Edit")]
+        public async Task<IActionResult> Edit(AuctionData obj)
+        {
+            await _bllAuctionData.AddAsync(new BO.AuctionData()
+            {
+                StartDate = obj.StartDate,
+                EndDate = obj.EndDate
+            });
+            return RedirectToAction("Index");
         }
     }
 }

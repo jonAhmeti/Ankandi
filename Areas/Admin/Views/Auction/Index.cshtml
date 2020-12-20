@@ -3,14 +3,28 @@
     ViewData["Title"] = "Index";
 }
 <style>
+    .aboveList a {
+        background-color: #242424;
+        color: #ffffff;
+    }
+
+    .aboveList a:hover {
+        background-color: #090c08;
+    }
+
     tbody tr:hover {
         box-shadow: 0 0 10px 1px rgba(0,0,0,0.2);
     }
 
-    #auctionsTable td, th {
+    #auctionsTable td, #auctionsTable th {
         text-align: center;
         vertical-align: middle;
         font-family: Calibri;
+        padding: 0;
+    }
+
+    #auctionsTable tr {
+        height: 50px;
     }
 
     #auctionsTable th {
@@ -18,14 +32,10 @@
         top: 0;
     }
 
-    .aboveList a {
-        background-color: #242424;
-        color: #ffffff;
+    #auctionsTable a {
+        cursor: pointer;
     }
 
-        .aboveList a:hover {
-            background-color: #090c08;
-        }
 </style>
 <div class="h-100 w-100">
     <div class="aboveList d-flex container-fluid py-5 justify-content-between">
@@ -54,7 +64,7 @@
                             <td>@Html.DisplayFor(m => item.Id)</td>
                             <td>@Html.DisplayFor(m => item.StartDate)</td>
                             <td>@Html.DisplayFor(m => item.EndDate)</td>
-                            <td class="d-flex justify-content-around">
+                            <td class="">
                                 <a data-id="@item.Id" class="text-decoration-none edit-modal-btn">Edit</a>
                                 <a asp-action="Delete" class="text-decoration-none m-0">Delete</a>
                             </td>
@@ -79,7 +89,11 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <partial name="AuctionData/_AuctionDataCreateForm" />
+                            <partial name="AuctionDataPartial/_AuctionDataCreateForm" model="@(new AuctionData()
+                              {
+                                  StartDate = DateTime.Now,
+                                  EndDate = DateTime.Now.AddDays(1)
+                              })" />
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -113,4 +127,4 @@
     </div>
 </div>
 
-<script src="~/js/Admin/auctionData.js"></script>
+<script src="~/js/Admin/AuctionData/create.js"></script>

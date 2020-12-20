@@ -1,19 +1,33 @@
-﻿<form asp-action="Create" method="post" class="form-group">
+﻿@model AuctionData
+@{
+    var startTime = (Model.StartDate.Hour < 10 ?
+        $"0{Model.StartDate.Hour}" : Model.StartDate.Hour.ToString())
+                    + ":" +
+                    (Model.StartDate.Minute < 10 ?
+                        $"0{Model.StartDate.Minute}" : $"{Model.StartDate.Minute}");
+    var endTime = (Model.EndDate.Hour < 10 ?
+        $"0{Model.EndDate.Hour}" : Model.EndDate.Hour.ToString())
+                  + ":" +
+                  (Model.EndDate.Minute < 10 ?
+                      $"0{Model.EndDate.Minute}" : $"{Model.EndDate.Minute}");
+}
+<form asp-action="Edit" method="post" class="form-group">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label class="form-control-plaintext">Start date</label>
+        <input hidden asp-for="Id" />
+        <label asp-for="StartDate" class="form-control-plaintext"></label>
         <div class="d-flex justify-content-between">
             <div class="input-group w-auto">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Date</span>
                 </div>
-                <input id="startDate" type="date" class="form-control" />
+                <input asp-for="StartDate.Date" type="date" class="form-control" />
             </div>
             <div class="input-group  w-auto">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Time</span>
                 </div>
-                <input id="startTime" type="time" class="form-control" />
+                <input asp-for="@startTime" id="startTime" type="time" class="form-control" />
             </div>
         </div>
         <input name="StartDate" id="startDateTime" hidden/>
@@ -26,19 +40,19 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Date</span>
                 </div>
-                <input id="endDate" type="date" class="form-control" />
+                <input asp-for="EndDate.Date" type="date" class="form-control" />
             </div>
             <div class="input-group w-auto">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Time</span>
                 </div>
-                <input id="endTime" type="time" class="form-control" />
+                <input asp-for="@endTime" type="time" class="form-control" />
             </div>
         </div>
         <input name="endDate" id="endDateTime" hidden />
         <span class="text-danger"></span>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Edit</button>
     </div>
 </form>
