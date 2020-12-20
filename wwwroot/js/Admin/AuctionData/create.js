@@ -5,40 +5,40 @@
         result.val(date.val() + "T" + time.val());
     }
     //set start date value
-    var startDate = $("#startDate");
-    startDate.val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
+    var createStartDate = $("#createStartDate");
+    createStartDate.val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
     //set start time value
-    var startTime = $("#startTime");
-    startTime.val(
+    var createStartTime = $("#createStartTime");
+    createStartTime.val(
         (today.getHours() < 10 ? `0${today.getHours()}` : today.getHours()) +
         ":" +
         (today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes()));
     //set StartDateTime value for form submit
-    var startDateTime = $("#startDateTime");
-    setDateTimeVal(startDateTime, startDate, startTime);
-    startDate.change(function() {
-        setDateTimeVal(startDateTime, startDate, startTime);
+    var createStartDateTime = $("#createStartDateTime");
+    setDateTimeVal(createStartDateTime, createStartDate, createStartTime);
+    createStartDate.change(function() {
+        setDateTimeVal(createStartDateTime, createStartDate, createStartTime);
     });
-    startTime.change(function() {
-        setDateTimeVal(startDateTime, startDate, startTime);
+    createStartTime.change(function() {
+        setDateTimeVal(createStartDateTime, createStartDate, createStartTime);
     });
     //set end date value
-    var endDate = $("#endDate");
-    endDate.val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() + 1));
+    var createEndDate = $("#createEndDate");
+    createEndDate.val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() + 1));
     //set end time value
-    var endTime = $("#endTime");
-    endTime.val(
+    var createEndTime = $("#createEndTime");
+    createEndTime.val(
         (today.getHours() < 10 ? `0${today.getHours()}` : today.getHours()) +
         ":" +
         (today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes()));
     //set EndDateTime value for form submit
-    var endDateTime = $("#endDateTime");
-    setDateTimeVal(endDateTime, endDate, endTime);
-    endDate.change(function() {
-        setDateTimeVal(endDateTime, endDate, endTime);
+    var createEndDateTime = $("#createEndDateTime");
+    setDateTimeVal(createEndDateTime, createEndDate, createEndTime);
+    createEndDate.change(function() {
+        setDateTimeVal(createEndDateTime, createEndDate, createEndTime);
     });
-    endTime.change(function() {
-        setDateTimeVal(endDateTime, endDate, endTime);
+    createEndTime.change(function() {
+        setDateTimeVal(createEndDateTime, createEndDate, createEndTime);
     });
 
 

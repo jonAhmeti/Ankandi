@@ -27,7 +27,7 @@ namespace Auction.Areas.Admin.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create(AuctionData obj)
         {
-            await _bllAuctionData.AddAsync(new BO.AuctionData()
+            var result = await _bllAuctionData.AddAsync(new BO.AuctionData()
             {
                 StartDate = obj.StartDate,
                 EndDate = obj.EndDate
