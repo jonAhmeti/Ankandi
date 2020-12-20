@@ -1,6 +1,5 @@
 ﻿$(function () {
 
-
     //Create Section____________________________________________//
     function setDateTimeVal(result, date, time) {
         result.val(date.val() + "T" + time.val());
@@ -13,27 +12,6 @@
     var createEndTime = $("#createEndTime");
     var createEndDateTime = $("#createEndDateTime");
 
-    function setInitialCreateValues(today) {
-        //set initial start date value
-        createStartDate.val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
-        //set initial end date value
-        createEndDate.val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() + 1));
-        //set initial start DateTime value
-        setDateTimeVal(createStartDateTime, createStartDate, createStartTime);
-        //set initial end DateTime value
-        setDateTimeVal(createEndDateTime, createEndDate, createEndTime);
-
-        //set initial start time value
-        createStartTime.val(
-            (today.getHours() < 10 ? `0${today.getHours()}` : today.getHours()) +
-            ":" +
-            (today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes()));
-        //set initial end time value
-        createEndTime.val(
-            (today.getHours() < 10 ? `0${today.getHours()}` : today.getHours()) +
-            ":" +
-            (today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes()));
-    }
 
     //set start DateTime value on Date and Time change
     createStartDate.change(function () {
@@ -51,20 +29,39 @@
     });
 
 
+    //function to set date and time to today, parameter given on button click
+    function setInitialCreateValues(today) {
+        //set initial start date value
+        createStartDate.val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
+        //set initial end date value
+        createEndDate.val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + (today.getDate() + 1));
+        //set initial start time value
+        createStartTime.val(
+            (today.getHours() < 10 ? `0${today.getHours()}` : today.getHours()) +
+            ":" +
+            (today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes()));
+        //set initial end time value
+        createEndTime.val(
+            (today.getHours() < 10 ? `0${today.getHours()}` : today.getHours()) +
+            ":" +
+            (today.getMinutes() < 10 ? `0${today.getMinutes()}` : today.getMinutes()));
+        //set initial start DateTime value
+        setDateTimeVal(createStartDateTime, createStartDate, createStartTime);
+        //set initial end DateTime value
+        setDateTimeVal(createEndDateTime, createEndDate, createEndTime);
+
+    }
+
     $("a.create-modal-btn").on("click",
         function () {
             const today = new Date();
             console.log("inside btnClick");
             setInitialCreateValues(today);
-            $("#createModal").modal('show');
+            $("#createModal").modal("show");
         });
 
 
-
-
-
     //Edit Section____________________________________________//
-
     var editStartDate;
     var editStartTime;
     var editStartDateTime;
@@ -135,4 +132,39 @@
     };
 
 
+    //Delete Section____________________________________________//
+
+    //get anchor tags with class delete-btn
+    const deleteBtns = $("a.delete-btn");
+    //set onclick methods for items in editBtns
+    for (let i = 0; i < deleteBtns.length; i++) {
+        const id = $(deleteBtns[i]).attr("data-id");
+        $(deleteBtns[i]).on(
+            "click",
+            function () {
+                if ($(deleteBtns[i]).css("color") === "rgb(0, 86, 179)") {
+                    $(deleteBtns[i]).css({
+                        "color": "rgb(255, 50, 50)",
+                        "font-weight": "bold"
+                    });
+                    setTimeout(function() {
+                            $(deleteBtns[i]).css({
+                                "color": "rgb(0, 86, 179)",
+                                "font-weight": "normal"
+                            });
+                        },
+                        5000);
+                } else {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "Auction/Delete",
+                        data: { id: id },
+                        success: function (result) {
+                            window.location.replace(result.redirect);
+                            window.location.reload();
+                        }
+                    });
+                }
+            });
+    };
 });

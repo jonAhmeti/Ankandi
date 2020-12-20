@@ -57,5 +57,12 @@ namespace Auction.Areas.Admin.Controllers
             });
             return RedirectToAction("Index");
         }
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _bllAuctionData.DeleteAsync(id);
+            return RedirectToAction("Index");
+        }
     }
 }

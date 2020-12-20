@@ -64,9 +64,9 @@
                             <td>@Html.DisplayFor(m => item.Id)</td>
                             <td>@Html.DisplayFor(m => item.StartDate)</td>
                             <td>@Html.DisplayFor(m => item.EndDate)</td>
-                            <td class="">
+                            <td>
                                 <a data-id="@item.Id" class="text-decoration-none edit-modal-btn">Edit</a>
-                                <a asp-action="Delete" class="text-decoration-none m-0">Delete</a>
+                                <a data-id="@item.Id" class="text-decoration-none delete-btn">Delete</a>
                             </td>
                         </tr>
                     }
@@ -127,4 +127,4 @@
     </div>
 </div>
 
-<script src="~/js/Admin/AuctionData/create.js"></script>
+<script src="~/js/Admin/AuctionData/index.js"></script>
