@@ -32,14 +32,14 @@
         top: 0;
     }
 
-    #auctionsTable a {
+    #auctionsTable a, a.create-modal-btn {
         cursor: pointer;
     }
 
 </style>
 <div class="h-100 w-100">
     <div class="aboveList d-flex container-fluid py-5 justify-content-between">
-        <a href="" class="badge-pill text-decoration-none py-2" data-toggle="modal" data-target="#createModal">
+        <a class="badge-pill text-decoration-none py-2 create-modal-btn">
             Create a new auction
         </a>
         <a asp-controller="Home" asp-action="Index" class="badge-pill text-decoration-none py-2">
