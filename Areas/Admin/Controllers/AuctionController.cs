@@ -49,8 +49,9 @@ namespace Auction.Areas.Admin.Controllers
         [HttpPost("Edit")]
         public async Task<IActionResult> Edit(AuctionData obj)
         {
-            await _bllAuctionData.AddAsync(new BO.AuctionData()
+            var result = await _bllAuctionData.UpdateAsync(new BO.AuctionData()
             {
+                Id = obj.Id,
                 StartDate = obj.StartDate,
                 EndDate = obj.EndDate
             });
