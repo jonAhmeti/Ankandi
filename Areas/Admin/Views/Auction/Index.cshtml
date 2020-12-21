@@ -16,26 +16,31 @@
         box-shadow: 0 0 10px 1px rgba(0,0,0,0.2);
     }
 
-    #auctionsTable td, #auctionsTable th {
-        text-align: center;
-        vertical-align: middle;
-        font-family: Calibri;
-        padding: 0;
-    }
-
-    #auctionsTable tr {
-        height: 50px;
-    }
-
     #auctionsTable th {
         position: sticky;
         top: 0;
     }
 
-    #auctionsTable a, a.create-modal-btn {
+   .create-modal-btn, .edit-modal-btn, .delete-btn {
         cursor: pointer;
     }
+    .edit-modal-btn:hover, .delete-btn:hover {
+        background-color: rgba(0,0,0,0.2);
+    }
 
+    #auctionsTable td, #auctionsTable th {
+        text-align: center;
+        vertical-align: middle;
+        font-family: Calibri;
+        padding: 0;
+        min-height: 50px;
+    }
+    .crud-div {
+        min-height: 50px;
+    }
+        .crud-div a:hover {
+            color: #007bff;
+        }
 </style>
 <div class="h-100 w-100">
     <div class="aboveList d-flex container-fluid py-5 justify-content-between">
@@ -53,7 +58,7 @@
                     <th>@Html.DisplayNameFor(m => m.Id)</th>
                     <th>@Html.DisplayNameFor(m => m.StartDate)</th>
                     <th>@Html.DisplayNameFor(m => m.EndDate)</th>
-                    <th></th>
+                    <th><div class="crud-div"></div></th>
                 </tr>
             </thead>
             <tbody>
@@ -65,8 +70,14 @@
                             <td>@Html.DisplayFor(m => item.StartDate)</td>
                             <td>@Html.DisplayFor(m => item.EndDate)</td>
                             <td>
-                                <a data-id="@item.Id" class="text-decoration-none edit-modal-btn">Edit</a>
-                                <a data-id="@item.Id" class="text-decoration-none delete-btn">Delete</a>
+                                <div class="crud-div d-flex align-items-stretch w-100 justify-content-center">
+                                    <div class="w-100 d-flex align-items-center justify-content-center edit-modal-btn" data-id="@item.Id">
+                                        <a class="text-decoration-none" >Edit</a>
+                                    </div>
+                                    <div class="w-100 d-flex align-items-center justify-content-center delete-btn" data-id="@item.Id">
+                                        <a class="text-decoration-none">Delete</a>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

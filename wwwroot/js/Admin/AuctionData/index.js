@@ -52,7 +52,7 @@
 
     }
 
-    $("a.create-modal-btn").on("click",
+    $(".create-modal-btn").on("click",
         function () {
             const today = new Date();
             console.log("inside btnClick");
@@ -120,7 +120,7 @@
     }
 
     //get anchor tags with class edit-modal-btn
-    const editBtns = $("a.edit-modal-btn");
+    const editBtns = $(".edit-modal-btn");
     //set onclick methods for items in editBtns
     for (let i = 0; i < editBtns.length; i++) {
         const id = $(editBtns[i]).attr("data-id");
@@ -135,35 +135,42 @@
     //Delete Section____________________________________________//
 
     //get anchor tags with class delete-btn
-    const deleteBtns = $("a.delete-btn");
+    const deleteBtns = $(".delete-btn");
     //set onclick methods for items in editBtns
     for (let i = 0; i < deleteBtns.length; i++) {
         const id = $(deleteBtns[i]).attr("data-id");
         $(deleteBtns[i]).on(
             "click",
-            function () {
-                if ($(deleteBtns[i]).css("color") === "rgb(0, 86, 179)") {
-                    $(deleteBtns[i]).css({
-                        "color": "rgb(255, 50, 50)",
-                        "font-weight": "bold"
-                    });
-                    setTimeout(function() {
-                            $(deleteBtns[i]).css({
-                                "color": "rgb(0, 86, 179)",
-                                "font-weight": "normal"
-                            });
-                        },
-                        5000);
-                } else {
+            function() {
+                if ($(deleteBtns[i]).css("background-color") === "rgba(255, 50, 50, 0.2)") {
                     $.ajax({
                         type: "DELETE",
                         url: "Auction/Delete",
                         data: { id: id },
-                        success: function (result) {
+                        success: function(result) {
                             window.location.replace(result.redirect);
                             window.location.reload();
                         }
                     });
+                } else {
+                    const anchor = ($(deleteBtns[i]).children())[0];
+                    $(deleteBtns[i]).css({
+                        "background-color": "rgba(255, 50, 50, 0.2)",
+                        "font-weight": "bold"
+                    });
+
+                    let timer = 5;
+                    const countdown = setInterval(function() {
+                            if (timer === 0) {
+                                $(anchor).text("Delete");
+                                $(deleteBtns[i]).removeAttr("style");
+                                clearInterval(countdown);
+                            } else {
+                                $(anchor).text(timer);
+                                timer--;
+                            }
+                        },
+                        1000);
                 }
             });
     };
