@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Auction.BLL;
@@ -53,13 +54,38 @@ namespace Auction.Controllers
                 var claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                 await HttpContext.SignInAsync(claimsPrincipal);
+
+                var area = user?.RoleId == 1 ? "Admin" : "Bidder";
+
+                return RedirectToAction("Index", "Home", new { area });
             }
 
-            var area = user?.RoleId == 1 ? "Admin" : "Bidder";
-
-            return RedirectToAction("Index", "Home", new { area });
+            return RedirectToAction("Index");
         }
 
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index");
+        }
+
+        [AllowAnonymous]
+        [HttpPost("SignUp")]
+        public async Task<IActionResult> SignUp(string username, string password, DateTime dob, string name)
+        {
+            await _bllUsers.AddAsync(new BO.Users()
+            {
+                Username = username,
+                Password = password,
+                Dob = dob,
+                Name = name,
+                RoleId = 2
+            });
+            return RedirectToAction("Index");
+        }
+
+        [AllowAnonymous]
         [Route("Privacy")]
         public IActionResult Privacy()
         {

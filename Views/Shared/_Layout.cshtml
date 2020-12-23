@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://code.jquery.com/jquery-latest.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <header id="_layoutHeader" class="container-fluid d-flex align-items-stretch justify-content-between">
@@ -30,17 +30,32 @@
         @{
             if (User.Identity.IsAuthenticated)
             {
-                <a asp-area="@User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value" asp-controller="Home" asp-action="Index" class="d-flex align-items-center">
-                    <i class="fas fa-user-circle fa-2x mr-2"></i>
-                    @User.Identity.Name
-                </a>
+                <div class="d-flex align-items-center">
+                    <a class="d-flex align-items-center" role="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle fa-2x mr-2"></i>
+                        @User.Identity.Name
+                    </a>
+
+                    <div class="dropdown-menu bg-dark" aria-labelledby="dropdownProfile">
+                        <a asp-area="@User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Role)?.Value" asp-controller="Home" asp-action="Index" class="dropdown-item">Home</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Privacy" class="dropdown-item" >Privacy</a>
+                        <a asp-area="" asp-controller="Home" asp-action="Logout" class="dropdown-item">Logout</a>
+                    </div>
+                </div>
             }
             else
             {
-                <a class="d-flex align-items-center">
-                    <i class="fas fa-user-circle fa-2x mr-2"></i>
-                    Profile
-                </a>
+                <div class="d-flex align-items-center">
+                    <a class="d-flex align-items-center" href="#" role="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-circle fa-2x mr-2"></i>
+                        Profile
+                    </a>
+
+                    <div class="dropdown-menu bg-dark" aria-labelledby="dropdownProfile">
+                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                </div>
             }
         }
     </header>

@@ -6,7 +6,7 @@
 <div id="_login">
     <div class="scroll-down">
         <span class="pb-5">
-            ANKANDI
+            Auction
         </span>
         <span>
             SCROLL DOWN
@@ -23,20 +23,22 @@
             <div class="modal-left">
                 <h1 class="modal-title">Welcome!</h1>
                 <p class="modal-desc">Ankandi .Net Core MVC</p>
-                <form asp-action="Login" method="post">
-                    <div class="input-block">
-                        <label for="email" class="input-label">Username</label>
-                        <input type="text" name="username" id="email" placeholder="Username">
-                    </div>
-                    <div class="input-block">
-                        <label for="password" class="input-label">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Password">
-                    </div>
-                    <div class="modal-buttons">
-                        <button class="input-button">Login</button>
-                    </div>
-                </form>
-                <p class="sign-up">Don't have an account? <a href="#">Sign up now</a></p>
+                <div id="formWrapper">
+                    <form asp-action="Login" method="post">
+                        <div class="input-block">
+                            <label for="email" class="input-label">Username</label>
+                            <input type="text" name="username" id="email" placeholder="Username">
+                        </div>
+                        <div class="input-block">
+                            <label for="password" class="input-label">Password</label>
+                            <input type="password" name="password" id="password" placeholder="Password">
+                        </div>
+                        <div class="modal-buttons">
+                            <button class="input-button">Login</button>
+                        </div>
+                    </form>
+                    <p class="sign-up">Don't have an account? <a id="signUpBtn" style="cursor: pointer">Sign up now</a></p>
+                </div>
             </div>
             <div class="modal-right">
                 <img src="~/css/Home/pexels-ekaterina-bolovtsova-6077422.jpg" alt="Modal Right Image">

@@ -30,3 +30,37 @@ document.onkeydown = evt => {
     evt = evt || window.event;
     evt.keyCode === 27 ? closeModal() : false;
 };
+
+$(function() {
+
+    const signUpBtn = $("#signUpBtn");
+    const formWrap = $("#formWrapper");
+    signUpBtn.on("click",
+        function () {
+            formWrap.html("");
+            formWrap.append(`
+                <form action="/SignUp" method="post">
+                    <div class="input-block">
+                        <label for="email" class="input-label">Username</label>
+                        <input type="text" name="username" id="email" placeholder="Username">
+                    </div>
+                    <div class="input-block">
+                        <label for="password" class="input-label">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Password">
+                    </div>
+                    <div class="input-block">
+                        <label for="name" class="input-label">Full name</label>
+                        <input type="text" name="name" id="name" placeholder="Your full name">
+                    </div>
+                    <div class="input-block">
+                        <label for="dob" class="input-label">Date of birth</label>
+                        <input type="date" name="dob" id="dob" value="1999-01-01">
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="input-button">Signup</button>
+                    </div>
+                    <p>Already have an account? <a id="loginBtn" style="cursor: pointer">Login</a></p>
+                </form>
+                `);
+        });
+});
