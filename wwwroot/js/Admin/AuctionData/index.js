@@ -156,7 +156,6 @@
                     const anchor = ($(deleteBtns[i]).children())[0];
                     $(deleteBtns[i]).css({
                         "background-color": "rgba(255, 50, 50, 0.2)",
-                        "font-weight": "bold"
                     });
 
                     let timer = 5;
