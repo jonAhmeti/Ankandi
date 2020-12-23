@@ -36,10 +36,10 @@ namespace Auction.Models
             var mappedList = list.Select(obj => new Event()
             {
                 Id = obj.Id,
-                AuctionId = int.Parse(obj.AuctionId.ToString()),
-                ItemId = int.Parse(obj.ItemId.ToString()),
-                StartDate = DateTime.Parse(obj.StartDate.ToString()),
-                EndDate = DateTime.Parse(obj.EndDate.ToString()),
+                AuctionId = obj.AuctionId,
+                ItemId = obj.ItemId,
+                StartDate = obj.StartDate,
+                EndDate = obj.EndDate,
                 Lun = obj.Lun,
                 Lud = obj.Lud,
                 TopBidder = obj.TopBidder,

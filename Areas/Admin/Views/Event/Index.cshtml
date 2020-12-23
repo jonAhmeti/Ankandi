@@ -105,10 +105,12 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <partial name="EventPartial/_EventCreateForm" model="@(new Event()
-                                                                               {
-
-                                                                               })" />
+                            @{
+                                await Html.RenderPartialAsync(
+                                    "EventPartial/_EventCreateForm",
+                                    new Event(),
+                                    new ViewDataDictionary (ViewData));
+                            }
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

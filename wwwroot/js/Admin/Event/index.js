@@ -63,7 +63,115 @@
 
 
     //Edit Section____________________________________________//
+    var editStartDate;
+    var editStartTime;
+    var editStartDateTime;
+    var editEndDate;
+    var editEndTime;
+    var editEndDateTime;
+
+    //get html objects
+    function initEditObjects() {
+        editStartDate = $("#editStartDate"); //start date input
+        editStartTime = $("#editStartTime"); //start time input
+        editStartDateTime = $("#editStartDateTime"); //hidden input
+        editEndDate = $("#editEndDate"); //end date input
+        editEndTime = $("#editEndTime"); //end time input
+        editEndDateTime = $("#editEndDateTime"); //hidden input
+    }
+
+    //set onchange methods
+    function setEditOnChangeMethods() {
+        editStartDate.change(function () {
+            setDateTimeVal(editStartDateTime, editStartDate, editStartTime);
+        });
+        editStartTime.change(function () {
+            setDateTimeVal(editStartDateTime, editStartDate, editStartTime);
+        });
+        editEndDate.change(function () {
+            setDateTimeVal(editEndDateTime, editEndDate, editEndTime);
+        });
+        editEndTime.change(function () {
+            setDateTimeVal(editEndDateTime, editEndDate, editEndTime);
+        });
+    }
+
+
+    //ajax call method for partial edit modal form
+    function editModalShow(id) {
+        $.ajax({
+            type: "GET",
+            url: "Event/Edit",
+            data: { id: id },
+            success: function (response) {
+                $("#editModal .modal-body").html(response);
+
+                //get edit objects
+                initEditObjects();
+
+                //set hidden inputs initial value
+                setDateTimeVal(editStartDateTime, editStartDate, editStartTime);
+                setDateTimeVal(editEndDateTime, editEndDate, editEndTime);
+
+                setEditOnChangeMethods();
+
+                $("#editModal").modal("show");
+            }
+        });
+    }
+
+    //get anchor tags with class edit-modal-btn
+    const editBtns = $(".edit-modal-btn");
+    //set onclick methods for items in editBtns
+    for (let i = 0; i < editBtns.length; i++) {
+        const id = $(editBtns[i]).attr("data-id");
+        $(editBtns[i]).on(
+            "click",
+            function () {
+                editModalShow(id);
+            });
+    };
 
 
     //Delete Section____________________________________________//
+
+    //get anchor tags with class delete-btn
+    const deleteBtns = $(".delete-btn");
+    //set onclick methods for items in editBtns
+    for (let i = 0; i < deleteBtns.length; i++) {
+        const id = $(deleteBtns[i]).attr("data-id");
+        $(deleteBtns[i]).on(
+            "click",
+            function () {
+                if ($(deleteBtns[i]).css("background-color") === "rgba(255, 50, 50, 0.2)") {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "Event/Delete",
+                        data: { id: id },
+                        success: function (result) {
+                            window.location.replace(result.redirect);
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    const anchor = ($(deleteBtns[i]).children())[0];
+                    $(deleteBtns[i]).css({
+                        "background-color": "rgba(255, 50, 50, 0.2)",
+                    });
+
+                    let timer = 5;
+                    const countdown = setInterval(function () {
+                            if (timer === 0) {
+                                $(anchor).text("Delete");
+                                $(deleteBtns[i]).removeAttr("style");
+                                clearInterval(countdown);
+                            } else {
+                                $(anchor).text(timer);
+                                timer--;
+                            }
+                        },
+                        1000);
+                }
+            });
+    };
 });
