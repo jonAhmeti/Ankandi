@@ -30,7 +30,7 @@ namespace Auction
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                 CookieAuthenticationDefaults.AuthenticationScheme, options =>
                 {
-                    options.LoginPath = "";
+                    options.LoginPath = "/";
                     options.LogoutPath = "/Logout";
                 });
 
@@ -38,6 +38,7 @@ namespace Auction
             services.AddTransient<BLL.AuctionData>();
             services.AddTransient<BLL.Items>();
             services.AddTransient<BLL.Events>();
+            services.AddTransient<BLL.ActiveAuctions>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

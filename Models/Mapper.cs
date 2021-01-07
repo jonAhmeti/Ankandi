@@ -68,6 +68,25 @@ namespace Auction.Models
 
             return mappedList;
         }
+
+        public static Item Item(BO.Item obj)
+        {
+            return new Item()
+            {
+                Id = obj.Id,
+                Name = obj.Name,
+                SoldDate = obj.SoldDate,
+                SoldPrice = obj.SoldPrice,
+                Image = obj.Image,
+                Amount = obj.Amount,
+                MeasurementUnits = obj.MeasurementUnits,
+                Details = obj.Details,
+                StartPrice = obj.StartPrice,
+                Lud = obj.Lud,
+                Lun = obj.Lun,
+                InD = obj.InD
+            };
+        }
         public static IEnumerable<Users> UsersMap(IEnumerable<BO.Users> list)
         {
             var mappedList = list.Select(obj => new Users()
@@ -97,5 +116,19 @@ namespace Auction.Models
 
             return mappedList;
         }
+        public static IEnumerable<ActiveAuction> ActiveAuctionsMap(IEnumerable<BO.ActiveAuction> list)
+        {
+            var mappedList = list.Select(obj => new ActiveAuction()
+            {
+                AuctionId = obj.AuctionId,
+                Opened = obj.Opened,
+                OpenedBy = obj.OpenedBy,
+                Closed = obj.Closed,
+                ClosedBy = obj.ClosedBy
+            });
+
+            return mappedList;
+        }
+
     }
 }

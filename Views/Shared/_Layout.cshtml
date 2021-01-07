@@ -30,7 +30,7 @@
         @{
             if (User.Identity.IsAuthenticated)
             {
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center ml-1">
                     <a class="d-flex align-items-center" role="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-circle fa-2x mr-2"></i>
                         @User.Identity.Name
@@ -45,7 +45,7 @@
             }
             else
             {
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center ml-1">
                     <a class="d-flex align-items-center" href="#" role="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-circle fa-2x mr-2"></i>
                         Profile
