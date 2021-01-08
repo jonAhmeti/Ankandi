@@ -1,0 +1,36 @@
+﻿#Details img {
+    box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, .3);
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#Details h1, #Details h3, #Details { font-family: Calibri; }
+
+.aboveDetails {
+    background-image: url(Capture.PNG);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+    .aboveDetails a {
+        background-color: #242424;
+        color: #ffffff;
+        border-radius: 0px 20px 20px 0px;
+        padding-left: 50px;
+        padding-right: 15px;
+        box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 1);
+        transition: box-shadow 0.3s ease-in-out, background-color 1s ease-in-out;
+    }
+
+    .aboveDetails a:hover {
+        background-color: #090c08;
+        box-shadow: 0 0 0px 5px rgba(0, 0, 0, 0.4);
+        color: #ed5c34;
+    }
+
+    .bidraw {
+        width: 100%;
+        border: 2px solid #ed5c34;
+        border-radius: 5px;
+    }

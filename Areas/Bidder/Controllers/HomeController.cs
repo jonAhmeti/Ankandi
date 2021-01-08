@@ -44,6 +44,15 @@ namespace Auction.Areas.Bidder.Controllers
             return View(activeEvents);
         }
 
+        [HttpGet("Details")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var objEvent = Mapper.Event(await _bllEvents.GetAsync(id));
+            ViewBag.Event = objEvent;
+            var objItem = Mapper.Item(await _bllItems.GetAsync(objEvent.ItemId));
+            return View(objItem);
+        }
+
         [HttpGet("GetActiveAuctionDetails")]
         public async Task<Dictionary<string, object>> GetActiveAuctionDetails()
         {
@@ -59,6 +68,12 @@ namespace Auction.Areas.Bidder.Controllers
                 {"events", events},
                 {"items",items}
             };
+        }
+
+        [HttpGet("GetEventDetails")]
+        public async Task<Event> GetEventDetails(int id)
+        {
+            return Mapper.Event(await _bllEvents.GetAsync(id));
         }
     }
 }

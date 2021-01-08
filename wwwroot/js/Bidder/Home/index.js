@@ -21,7 +21,7 @@
                     $(cardGroup).append(`<div class="row row-cols-5" id="row_${rowNum}"></div>`);
                 }
 
-                $(`#row_${rowNum}`).append(`<div class="card border">
+                $(`#row_${rowNum}`).append(`<div class="card border" id="card_${iterator}" data-id="${objEventDetails.id}">
                                         <img src="${objItem.image}" class="card-img-top" alt="Item picture: ${objItem
                                             .image}">
                                         <div class="card-body">
@@ -29,10 +29,10 @@
                                             <h6 style="color:#00A8E8;font-weight:bold;margin:0;">Current price: ${objEventDetails.currentPrice}€</h6>
                                             <h7 style="color:#294D4A;">Start price: ${objItem.startPrice}</h7>
                                             <form class="w-100 input-group mt-2">
-                                                <a href="#" class="btn btn-primary my-1">Details</a>
+                                                <a class="btn btn-primary my-1">Details</a>
                                             </form>
                                             <form class="w-100 input-group">
-                                                <a href="#" class="btn btn-primary form-control">Bid by</a>
+                                                <a class="btn btn-primary form-control">Bid</a>
                                                 <div class="input-group-append">
                                                     <span class="input-group-text">${objEventDetails.minPriceIncrementAmount}€</span>
                                                 </div>
@@ -41,7 +41,14 @@
                                      </div>`);
                 iterator === 4 ? iterator = 0 : iterator++;
             }
-        }
 
+            const detailsBtns = ("div.card a:contains(Details)");
+            console.log($(detailsBtns));
+            for (let i = 0; i < response.events.length; i++) {
+                const id = $("div#card_" + i).attr("data-id");
+                console.log($($(detailsBtns)[i]));
+                $($(detailsBtns)[i]).attr("href", "/Bidder/Details?id=" + id);
+            }
+        }
     });
 })

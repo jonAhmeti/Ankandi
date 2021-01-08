@@ -35,7 +35,7 @@ body::-webkit-scrollbar-thumb {
     #_layoutHeader a { color: #ffffff; }
 
         #_layoutHeader a:hover {
-            color: #a882dd;
+            color: #ed5c34;
             text-decoration: none;
             cursor: pointer;
         }

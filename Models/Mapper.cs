@@ -31,6 +31,7 @@ namespace Auction.Models
             });
             return mappedList;
         }
+
         public static IEnumerable<Event> EventsMap(IEnumerable<BO.Event> list)
         {
             var mappedList = list.Select(obj => new Event()
@@ -48,6 +49,24 @@ namespace Auction.Models
             });
             return mappedList;
         }
+
+        public static Event Event(BO.Event obj)
+        {
+            return new Event()
+            {
+                Id = obj.Id,
+                ItemId = obj.ItemId,
+                AuctionId = obj.AuctionId,
+                StartDate = obj.StartDate,
+                EndDate = obj.EndDate,
+                CurrentPrice = obj.CurrentPrice,
+                TopBidder = obj.TopBidder,
+                MinPriceIncrementAmount = obj.MinPriceIncrementAmount,
+                Lun = obj.Lun,
+                Lud = obj.Lud
+            };
+        }
+
         public static IEnumerable<Item> ItemsMap(IEnumerable<BO.Item> list)
         {
             var mappedList = list.Select(obj => new Item()
@@ -68,7 +87,6 @@ namespace Auction.Models
 
             return mappedList;
         }
-
         public static Item Item(BO.Item obj)
         {
             return new Item()
@@ -87,6 +105,7 @@ namespace Auction.Models
                 InD = obj.InD
             };
         }
+
         public static IEnumerable<Users> UsersMap(IEnumerable<BO.Users> list)
         {
             var mappedList = list.Select(obj => new Users()
