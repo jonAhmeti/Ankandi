@@ -22,5 +22,7 @@ namespace Auction.Models
         public int ItemId { get; set; }
         [DisplayName("Auction's id")]
         public int AuctionId { get; set; }
+
+        public bool PriceChanged { get; set; }
     }
 }

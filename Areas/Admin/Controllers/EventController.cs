@@ -35,13 +35,14 @@ namespace Auction.Areas.Admin.Controllers
         [HttpPost("Create")]
         public async Task<IActionResult> Create(Event obj)
         {
+            var item = await _bllItems.GetAsync(obj.ItemId);
             var result = await _bllEvents.AddAsync(new BO.Event()
             {
                 StartDate = obj.StartDate,
                 EndDate = obj.EndDate,
                 ItemId = obj.ItemId,
                 AuctionId = obj.AuctionId,
-                CurrentPrice = obj.CurrentPrice,
+                CurrentPrice = obj.CurrentPrice < item.StartPrice ? item.StartPrice : obj.CurrentPrice,
                 MinPriceIncrementAmount = obj.MinPriceIncrementAmount,
                 TopBidder = obj.TopBidder
             });

@@ -39,6 +39,8 @@ namespace Auction
             services.AddTransient<BLL.Items>();
             services.AddTransient<BLL.Events>();
             services.AddTransient<BLL.ActiveAuctions>();
+            services.AddTransient<BLL.BidHistories>();
+            services.AddTransient<BLL.Withdraws>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
