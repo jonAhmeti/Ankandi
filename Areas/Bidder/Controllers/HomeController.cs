@@ -79,9 +79,19 @@ namespace Auction.Areas.Bidder.Controllers
 
         //Method that returns the event object when 'Details' of an event/item is clicked in the bidder's home.
         [HttpGet("GetEventDetails")]
-        public async Task<Event> GetEventDetails(int id)
+        public async Task<Event> GetEventDetails(int id, string username = "")
         {
-            return Mapper.Event(await _bllEvents.GetAsync(id));
+            var objEvent = Mapper.Event(await _bllEvents.GetAsync(id));
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                return objEvent;
+            }
+
+            var bidderId = (await _bllUsers.GetByUsernameAsync(username)).Id;
+            if (objEvent.TopBidder == bidderId) return objEvent;
+
+            objEvent.PriceChanged = true;
+            return objEvent;
         }
 
         //Bid method that calls the bid procedure and returns the updated event.
@@ -92,8 +102,9 @@ namespace Auction.Areas.Bidder.Controllers
             var objEvent = await GetEventDetails(obj.EventId);
             
             //if bidAmount has changed before refreshing on the user's screen and is smaller than other biders' bid then return null
-            if (obj.BidAmount < objEvent.CurrentPrice)
+            if (obj.BidAmount <= objEvent.CurrentPrice)
             {
+                objEvent.PriceChanged = true;
                 return objEvent;
             }
 

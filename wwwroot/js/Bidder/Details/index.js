@@ -37,10 +37,21 @@
                     username: $("#dropdownProfile").text().trim()
                 },
                 success: function(response) {
-                    $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
-                    $("#CurrentPrice").css({ "background-color": "rgba(0,0,255,.7)" });
-                    setMinBidInput();
-                    $("#CurrentPrice").animate({ backgroundColor: "rgba(0,255,0,0)" }, 1500);
+                    if (response.priceChanged) {
+                        $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
+                        $("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
+                        setMinBidInput();
+                        $("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
+                        $("#infoCurrentPrice").css("padding-left",".5em")
+                            .html(
+                                '<i class="fas fa-exclamation-triangle"></i> Someone else placed a bid before the price refreshed!<br />');
+                    } else {
+                        $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
+                        $("#CurrentPrice").css({ "background-color": "rgba(0,0,255,.7)" });
+                        setMinBidInput();
+                        $("#CurrentPrice").animate({ backgroundColor: "rgba(0,255,0,0)" }, 1500);
+                        $("#infoCurrentPrice").removeAttr("style").html("");
+                    }
                 }
             });
         });
@@ -65,4 +76,32 @@
                 }
             });
         });
+
+    const refresh = setInterval(function () {
+        $.ajax({
+            type: "GET",
+            url: "/Bidder/GetEventDetails",
+            data: {
+                id: event.id,
+                username: $("#dropdownProfile").text().trim(),
+                price: event.currentPrice
+            },
+            success: function(response) {
+                if (response.priceChanged) {
+                    $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
+                    //$("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
+                    setMinBidInput();
+                    //$("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
+                    $("#updatedCurrentPrice").css({ "opacity": 1, "color": "#ffc107" });
+                    $("#updatedCurrentPrice").animate({ opacity: 0 }, 1500);
+                } else {
+                    $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
+                    setMinBidInput();
+                    $("#updatedCurrentPrice").css({ "opacity": 1, "color": "#17a2b8" });
+                    $("#updatedCurrentPrice").animate({ opacity: 0 }, 1500);
+                }
+            }
+        });
+    }, 3000);
+
 });

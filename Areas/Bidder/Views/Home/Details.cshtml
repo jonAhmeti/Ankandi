@@ -18,8 +18,8 @@
                 <h1>@Model.Name</h1><br/>
                 <h5>Start price: @Model.StartPrice€</h5><br />
                 <h5>Minimum price increment by: @ViewBag.Event.MinPriceIncrementAmount€</h5><br />
-                <h5 id="CurrentPrice">Current price: @(ViewBag.Event.CurrentPrice)€</h5><br />
-                <span id="infoCurrentPrice"></span>
+                <h5 id="CurrentPrice">Current price: @(ViewBag.Event.CurrentPrice)€</h5><span class="pl-4" id="updatedCurrentPrice" style="opacity: 0"><i class="fas fa-info-circle"></i></span><br />
+                <span id="infoCurrentPrice" class="text-warning"></span>
                 <h5>Amount: @Model.Amount @Model.MeasurementUnits</h5><br />
                 <h5>Details: @Model.Details</h5>
             </div>
