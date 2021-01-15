@@ -12,7 +12,7 @@
 }
 
 .aboveDetails {
-    background-image: url(Capture.PNG);
+    background-image: url(../../../css/Shared/background.PNG);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -34,8 +34,8 @@
         color: #ed5c34;
     }
 
-    .bidraw {
-        width: 100%;
-        border: 2px solid #ed5c34;
-        border-radius: 5px;
-    }
+.bidraw {
+    width: 100%;
+    border: 2px solid #ed5c34;
+    border-radius: 5px;
+}

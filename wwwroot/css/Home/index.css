@@ -61,6 +61,7 @@ body {
     background: #fff;
     -webkit-transform: translateY(100px) scale(0.4);
     transform: translateY(100px) scale(0.4);
+    overflow-y: auto;
 }
 
 #_login .modal-title {

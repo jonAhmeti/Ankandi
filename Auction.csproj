@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\css\Bidder\Home\HEXXX.mp4" />
+    <None Include="wwwroot\css\Shared\background.PNG" />
   </ItemGroup>
 
   <ItemGroup>

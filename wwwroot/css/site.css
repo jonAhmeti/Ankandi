@@ -30,6 +30,7 @@ body::-webkit-scrollbar-thumb {
 #_layoutHeader {
     min-height: 75px;
     background-color: #090c08;
+    overflow-x: auto;
 }
 
     #_layoutHeader a { color: #ffffff; }

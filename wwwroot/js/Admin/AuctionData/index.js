@@ -1,5 +1,26 @@
 ﻿$(function () {
+    //Active Auction Section____________________________________//
+    $("#open").on("click",
+        function() {
+            $.ajax({
+                type: "POST",
+                url: "Auction/Open",
+                success: function(response) {
+                    $("#openResult").text(`Successful: ${response}`);
+                }
+            });
+        });
 
+    $("#close").on("click",
+        function () {
+            $.ajax({
+                type: "POST",
+                url: "Auction/Close",
+                success: function (response) {
+                    $("#closeResult").text(`Successful: ${response}`);
+                }
+            });
+        });
     //Create Section____________________________________________//
     function setDateTimeVal(result, date, time) {
         result.val(date.val() + "T" + time.val());
