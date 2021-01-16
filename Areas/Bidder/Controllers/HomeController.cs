@@ -63,11 +63,23 @@ namespace Auction.Areas.Bidder.Controllers
         [HttpGet("GetActiveAuctionDetails")]
         public async Task<Dictionary<string, object>> GetActiveAuctionDetails()
         {
-            var events = Mapper.EventsMap(await _bllEvents.GetAllByAuctionId(Mapper.ActiveAuctionsMap(await _bllActiveAuctions.GetAllAsync()).FirstOrDefault().AuctionId)).ToList();
+            var activeAuction = (await _bllActiveAuctions.GetAllAsync()).FirstOrDefault();
+
+            var events = Mapper.EventsMap(await _bllEvents.GetAllByAuctionId(activeAuction.AuctionId)).ToList();
             var items = new List<Item>();
             foreach (var objEvent in events)
             {
                 items.Add(Mapper.Item(await _bllItems.GetAsync(objEvent.ItemId)));
+            }
+
+            if (activeAuction.Closed)
+            {
+                return new Dictionary<string, object>()
+                {
+                    {"closed", null},
+                    {"events", events},
+                    {"items",items}
+                };
             }
 
             return new Dictionary<string, object>()
