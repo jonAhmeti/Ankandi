@@ -35,7 +35,10 @@
                                 <span class="input-group-text">€</span>
                             </div>
                         </div>
-                        <p class="text-muted small mt-1"><i class="fas fa-info-circle text-info"></i> You can only bid with an amount of <strong>the current price plus the added minimum.</strong></p>
+                        <p class="text-muted small mt-1">
+                            <i class="fas fa-info-circle text-info"></i> You can only bid with an amount of <strong>the current price plus the added minimum</strong> or more.<br />
+                            €<span id="infoIncrement" class="text-info font-weight-bold">@(decimal.Truncate(ViewBag.Event.CurrentPrice + ViewBag.Event.MinPriceIncrementAmount))</span> or more
+                        </p>
                     </div>
                     <div class="col col-sm-3">
                         <p><span style="color: #FFCC00"><i class="fas fa-exclamation-triangle"></i></span> Once you withdraw you'll be <strong>removed as the last bidder</strong> and the last bidder will be the one with the highest bid after you.</p>
@@ -43,7 +46,7 @@
                 </div>
                 <div class="row row-cols-2 justify-content-around">
                     <div class="col col-sm-3">
-                        <button id="bid" class="form-control btn btn-primary font-weight-bold">Bid</button>
+                        <button id="bid" class="form-control btn btn-primary font-weight-bold" disabled="true">Bid</button>
                     </div>
                     <div class="col col-sm-3">
                         <button id="withdraw" class="form-control btn btn-warning font-weight-bold">Withdraw</button>
