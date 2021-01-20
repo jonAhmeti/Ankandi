@@ -107,7 +107,7 @@
                     } else {
                         let i = 0;
                         for (let obj of response.events) {
-                            $(`#currentPrice_${i}`).text(`${obj.currentPrice}`);
+                            $(`#currentPrice_${i}`).text(` ${obj.currentPrice}`);
                             i++;
                         }
                     }

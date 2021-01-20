@@ -55,7 +55,7 @@
                         },
                         success: function (response) {
                             btnInputValidation(response);
-                            $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
+                            $("#CurrentPrice").text(response.currentPrice);
                             if (response.priceChanged) {
                                 $("#updatedCurrentPrice").css({ "opacity": 1, "color": "#ffc107" });
                                 $("#updatedCurrentPrice").animate({ opacity: 0 }, 1500);
@@ -82,14 +82,14 @@
                             },
                             success: function (response) {
                                 if (response.priceChanged) {
-                                    $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
+                                    $("#CurrentPrice").text(response.currentPrice);
                                     $("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
                                     $("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
                                     $("#infoCurrentPrice").css("padding-left", ".5em")
                                         .html(
                                             '<i class="fas fa-exclamation-triangle"></i> Someone else placed a bid before the price refreshed!<br />');
                                 } else {
-                                    $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
+                                    $("#CurrentPrice").text(response.currentPrice);
                                     $("#CurrentPrice").css({ "background-color": "rgba(0,0,255,.7)" });
                                     $("#CurrentPrice").animate({ backgroundColor: "rgba(0,255,0,0)" }, 1500);
                                     $("#infoCurrentPrice").removeAttr("style").html("");
@@ -111,7 +111,7 @@
                             },
                             success: function (response) {
                                 if (response !== null) {
-                                    $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
+                                    $("#CurrentPrice").text(response.currentPrice);
                                     $("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
                                     $("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
                                 }

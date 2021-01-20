@@ -33,7 +33,7 @@
                 <div class="d-flex align-items-center ml-1">
                     <a class="d-flex align-items-center" role="button" id="dropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-circle fa-2x mr-2"></i>
-                        @User.Identity.Name
+                        @(char.ToUpper(User.Identity.Name[0]) + User.Identity.Name.Substring(1))
                     </a>
 
                     <div class="dropdown-menu bg-dark" aria-labelledby="dropdownProfile">
