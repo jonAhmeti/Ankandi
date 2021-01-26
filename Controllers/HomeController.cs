@@ -6,6 +6,8 @@ using Auction.BLL;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -37,6 +39,20 @@ namespace Auction.Controllers
                 return RedirectToAction("Index", "Home", new {area});
             }
             return View();
+        }
+
+        //________________________________________________________________________________________________________//
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult ChangeLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)), new CookieOptions
+                {
+                    Expires = DateTimeOffset.Now.AddDays(7)
+                });
+
+            return LocalRedirect(returnUrl);
         }
 
         [AllowAnonymous]
