@@ -1,4 +1,7 @@
 ﻿$(function () {
+    //get current culture/lang
+    const culture = $("#culture").children("option:selected").val();
+
     const urlArray = document.URL.split("?id="); // Get current url
     const eventId = urlArray[urlArray.length - 1];  // Get the last part of the array (-1)
 
@@ -86,7 +89,11 @@
                                     $("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
                                     $("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
                                     $("#infoCurrentPrice").css("padding-left", ".5em")
+                                    culture === "sq"
+                                        ? $("#infoCurrentPrice")
                                         .html(
+                                            '<i class="fas fa-exclamation-triangle"></i> Çmimi ka ndryshuar para se të përditësohet!<br />')
+                                        : $("#infoCurrentPrice").html(
                                             '<i class="fas fa-exclamation-triangle"></i> Someone else placed a bid before the price refreshed!<br />');
                                 } else {
                                     $("#CurrentPrice").text(response.currentPrice);

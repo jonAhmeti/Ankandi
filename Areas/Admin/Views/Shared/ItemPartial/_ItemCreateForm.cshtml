@@ -1,34 +1,35 @@
 ﻿@model Item
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
 <form asp-action="Create" method="post" class="form-group col">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group row">
         <!--Item name and start price inputs-->
-            <div class="w-auto col col-6">
-                <label class="form-control-plaintext">Name</label>
-                <!--input name-->
-                <input name="Name" placeholder="Item's name" type="text" class="form-control"/>
-            </div>
-            <div class="w-auto col col-6">
-                <label class="form-control-plaintext">Start Price</label>
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">€</span>
-                    </div>
-                    <!--input start price-->
-                    <input name="StartPrice" placeholder="Minimum price" class="form-control"/>
+        <div class="w-auto col col-6">
+            <label class="form-control-plaintext">@Localizer["name"]</label>
+            <!--input name-->
+            <input name="Name" placeholder="@Localizer["namePlaceholder"]" type="text" class="form-control" />
+        </div>
+        <div class="w-auto col col-6">
+            <label class="form-control-plaintext">@Localizer["startPrice"]</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">€</span>
                 </div>
+                <!--input start price-->
+                <input name="StartPrice" placeholder="Minimum price" class="form-control" />
             </div>
+        </div>
     </div>
     <div class="form-group row">
         <!--Item measurement units and amount-->
         <div class="w-auto col col-6">
-            <label class="form-control-plaintext">Measurement units</label>
-            <input name="MeasurementUnits" placeholder="piece, kg, liter, cm..." class="form-control"/>
+            <label class="form-control-plaintext">@Localizer["measurementUnits"]</label>
+            <input name="MeasurementUnits" placeholder="piece, kg, liter, cm..." class="form-control" />
         </div>
         <div class="w-auto col col-6">
-            <label class="form-control-plaintext">Amount</label>
-            <input name="Amount" placeholder="Amount of item by units" class="form-control"/>
+            <label class="form-control-plaintext">@Localizer["amount"]</label>
+            <input name="Amount" placeholder="@Localizer["amountPlaceholder"]" class="form-control" />
         </div>
     </div>
     <div class="form-group row">
@@ -36,46 +37,46 @@
         <div class="col col-6">
             <div class="row">
                 <div class="col col-12">
-                    <label class="form-control-plaintext">Sold date</label>
+                    <label class="form-control-plaintext">@Localizer["soldDate"]</label>
                     <div class="row">
                         <div class="input-group col col-6 pr-0">
                             <!--input startDate-->
-                            <input id="createSoldDate" placeholder="Date" type="date" class="form-control"/>
+                            <input id="createSoldDate" placeholder="@Localizer["date"]" type="date" class="form-control" />
                         </div>
                         <div class="input-group col col-6">
                             <!--input startTime-->
-                            <input id="createSoldTime" placeholder="Time" type="time" class="form-control"/>
+                            <input id="createSoldTime" placeholder="@Localizer["time"]" type="time" class="form-control" />
                         </div>
                         <!--hidden input startDateTime-->
-                        <input name="SoldDate" id="createSoldDateTime" hidden/>
+                        <input name="SoldDate" id="createSoldDateTime" hidden />
                         <span class="text-danger"></span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="w-auto col col-6">
-            <label class="form-control-plaintext">Price sold</label>
+            <label class="form-control-plaintext">@Localizer["priceSold"]</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">€</span>
                 </div>
                 <!--input sold price-->
-                <input name="SoldPrice" id="createSoldPrice" class="form-control"/>
+                <input name="SoldPrice" id="createSoldPrice" class="form-control" />
             </div>
         </div>
     </div>
     <div class="form-group row">
         <!--Item image and description-->
         <div class="w-auto col col-6">
-            <label class="form-control-plaintext">Image</label>
-            <input name="Image" placeholder="URI of the image" class="form-control"/>
+            <label class="form-control-plaintext">@Localizer["image"]</label>
+            <input name="Image" placeholder="@Localizer["imagePlaceholder"]" class="form-control" />
         </div>
         <div class="w-auto col col-6">
-            <label class="form-control-plaintext">Details</label>
-            <textarea name="Details" placeholder="Descripiton of the item" class="form-control" style="min-height: 2.5em"></textarea>
+            <label class="form-control-plaintext">@Localizer["details"]</label>
+            <textarea name="Details" placeholder="@Localizer["detailsPlaceholder"]" class="form-control" style="min-height: 2.5em"></textarea>
         </div>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">@Localizer["create"]</button>
     </div>
 </form>

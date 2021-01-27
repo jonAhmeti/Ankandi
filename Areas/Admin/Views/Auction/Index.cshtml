@@ -1,4 +1,4 @@
-﻿@using System.Collections
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @model IEnumerable<AuctionData>
 @{
     ViewData["Title"] = "Auction CRUD";
@@ -24,9 +24,10 @@
     .create-modal-btn, .edit-modal-btn, .delete-btn {
         cursor: pointer;
     }
-    .edit-modal-btn:hover, .delete-btn:hover {
-        background-color: rgba(0,0,0,0.2);
-    }
+
+        .edit-modal-btn:hover, .delete-btn:hover {
+            background-color: rgba(0,0,0,0.2);
+        }
 
     #auctionsTable td, #auctionsTable th {
         text-align: center;
@@ -35,24 +36,26 @@
         padding: 0;
         min-height: 50px;
     }
+
     .crud-div {
         min-height: 50px;
     }
-    .crud-div a:hover {
-        color: #007bff;
-    }
+
+        .crud-div a:hover {
+            color: #007bff;
+        }
 </style>
 <link rel="stylesheet" href="~/css/Admin/backgroundHeader.css" />
 <div class="h-100 w-100">
     <div class="aboveList d-flex py-5 justify-content-between">
         <a class="badge-pill text-decoration-none py-2 pr-3 create-modal-btn">
-            Create a new auction
+            @Localizer["createNewBtn"]
         </a>
         <a class="badge-pill text-decoration-none py-2 px-3" data-toggle="modal" data-target="#activeAuctionModal">
-            Active auction
+            @Localizer["activeAuction"]
         </a>
         <a asp-controller="Home" asp-action="Index" class="badge-pill text-decoration-none py-2 pl-3" id="backToHome-btn">
-            Back to admin page
+            @Localizer["backToHome"]
         </a>
     </div>
     <div>
@@ -76,10 +79,10 @@
                             <td>
                                 <div class="crud-div d-flex align-items-stretch w-100 justify-content-center">
                                     <div class="w-100 d-flex align-items-center justify-content-center edit-modal-btn" data-id="@item.Id">
-                                        <a class="text-decoration-none" >Edit</a>
+                                        <a class="text-decoration-none">@Localizer["edit"]</a>
                                     </div>
                                     <div class="w-100 d-flex align-items-center justify-content-center delete-btn" data-id="@item.Id">
-                                        <a class="text-decoration-none">Delete</a>
+                                        <a class="text-decoration-none">@Localizer["delete"]</a>
                                     </div>
                                 </div>
                             </td>
@@ -98,7 +101,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Create a new auction</h5>
+                            <h5 class="modal-title">@Localizer["modalHeaderCreate"]</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -111,7 +114,7 @@
                               })" />
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["close"]</button>
                         </div>
                     </div>
                 </div>
@@ -124,7 +127,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Edit an auction</h5>
+                            <h5 class="modal-title">@Localizer["modalHeaderEdit"]</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -133,7 +136,7 @@
                             <!--Modal Body will be added here when clicked on the edit button-->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["close"]</button>
                         </div>
                     </div>
                 </div>
@@ -146,7 +149,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Set as active auction</h5>
+                            <h5 class="modal-title">@Localizer["modalActiveAuction"]</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -155,17 +158,17 @@
                             @{
                                 if (ViewBag.Auctions == null)
                                 {
-                                    <h5><i class="fas fa-info-circle text-info"></i> You must first<strong> create at least 1 (one)</strong> auction, to be able to set it as active!</h5>
+                                                        <h5><i class="fas fa-info-circle text-info"></i> @Localizer["noAuctionsActive1"]<strong> @Localizer["noAuctionsActive2"]</strong> @Localizer["noAuctionsActive3"]</h5>
                                 }
                                 else
                                 {
                                     <!--Active Auction Info-->
                                     <div class="form-group row">
                                         <div class="col">
-                                            <h6>Current active auction is:</h6>
+                                            <h6>@Localizer["currentActiveAuction"]</h6>
                                             <p>
                                                 Id: @ViewBag.ActiveAuction.Id<br />
-                                                Date: @ViewBag.ActiveAuction.StartDate - @ViewBag.ActiveAuction.EndDate
+                                                @Localizer["date"]: @ViewBag.ActiveAuction.StartDate - @ViewBag.ActiveAuction.EndDate
                                             </p>
                                         </div>
                                     </div>
@@ -173,16 +176,16 @@
                                     <hr />
                                     <div class="form-group row">
                                         <div class="col">
-                                            <label><i class="fas fa-info-circle text-info"></i> Here you're able to open or close an auction</label>
+                                            <label><i class="fas fa-info-circle text-info"></i> @Localizer["hereOpenClose"]</label>
                                             <div class="row row-cols-2 justify-content-around">
                                                 <div class="col col-auto">
-                                                    <a class="btn btn-primary" id="open">Open</a>
-                                                    <br/>
+                                                    <a class="btn btn-primary" id="open">@Localizer["open"]</a>
+                                                    <br />
                                                     <label id="openResult"></label>
                                                 </div>
                                                 <div class="col col-auto">
-                                                    <a class="btn btn-danger" id="close">Close</a>
-                                                    <br/>
+                                                    <a class="btn btn-danger" id="close">@Localizer["close"]</a>
+                                                    <br />
                                                     <label id="closeResult"></label>
                                                 </div>
                                             </div>
@@ -192,20 +195,20 @@
                                     <hr />
                                     <div class="form-group row">
                                         <div class="col">
-                                            <label><i class="fas fa-info-circle text-warning"></i> Here you can change the current active auction.</label>
-                                            <br/>
+                                            <label><i class="fas fa-info-circle text-warning"></i> @Localizer["hereChangeActive"]</label>
+                                            <br />
                                             <form asp-action="SetActive" method="post" class="row row-cols-3 justify-content-around">
                                                 <div class="col col-auto align-items-center">
-                                                    <label class="form-control-plaintext">Select by Id: </label>
+                                                    <label class="form-control-plaintext">@Localizer["changeActiveById"] </label>
                                                 </div>
                                                 <div class="col col-auto">
                                                     <select name="id" class="form-control dropdown"
                                                             asp-items="@(new SelectList(ViewBag.Auctions, "Id", "Id"))">
-                                                        <option value="0" selected disabled hidden>Please select one</option>
+                                                        <option value="0" selected disabled hidden>@Localizer["chooseActive"]</option>
                                                     </select>
                                                 </div>
                                                 <div class="col col-auto">
-                                                    <button type="submit" class="btn btn-primary">Set</button>
+                                                    <button type="submit" class="btn btn-primary">@Localizer["saveActive"]</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -214,7 +217,7 @@
                             }
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["close"]</button>
                         </div>
                     </div>
                 </div>

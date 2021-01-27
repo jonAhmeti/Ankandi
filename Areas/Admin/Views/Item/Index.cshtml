@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Item>
+﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+@model IEnumerable<Item>
 @{
     ViewData["Title"] = "Index";
 }
@@ -48,45 +49,45 @@
 <div class="h-100 w-100">
     <div class="aboveList d-flex container-fluid py-5 justify-content-between">
         <a class="badge-pill text-decoration-none py-2 create-modal-btn">
-            Create a new item
+            @Localizer["createBtn"]
         </a>
         <a asp-controller="Home" asp-action="Index" class="badge-pill text-decoration-none py-2">
-            Back to admin page
+            @Localizer["backBtn"]
         </a>
     </div>
     <div>
         <table id="itemsTable" class="table">
             <thead class="thead-dark">
-            <tr>
-                <th>@Html.DisplayNameFor(m => m.Id)</th>
-                <th>@Html.DisplayNameFor(m => m.Name)</th>
-                <th>@Html.DisplayNameFor(m => m.StartPrice)</th>
-                <th>@Html.DisplayNameFor(m => m.SoldPrice)</th>
-                <th><div class="crud-div"></div></th>
-            </tr>
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.Id)</th>
+                    <th>@Html.DisplayNameFor(m => m.Name)</th>
+                    <th>@Html.DisplayNameFor(m => m.StartPrice)</th>
+                    <th>@Html.DisplayNameFor(m => m.SoldPrice)</th>
+                    <th><div class="crud-div"></div></th>
+                </tr>
             </thead>
             <tbody>
-            @{
-                foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(m => item.Id)</td>
-                        <td>@Html.DisplayFor(m => item.Name)</td>
-                        <td>@Html.DisplayFor(m => item.StartPrice)</td>
-                        <td>@(item.SoldPrice == null ? "Not sold" : item.SoldPrice.ToString())</td>
-                        <td>
-                            <div class="crud-div d-flex align-items-stretch w-100 justify-content-center">
-                                <div class="w-100 d-flex align-items-center justify-content-center edit-modal-btn" data-id="@item.Id">
-                                    <a class="text-decoration-none">Edit</a>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(m => item.Id)</td>
+                            <td>@Html.DisplayFor(m => item.Name)</td>
+                            <td>@Html.DisplayFor(m => item.StartPrice)</td>
+                            <td>@(item.SoldPrice == null ? "Not sold" : item.SoldPrice.ToString())</td>
+                            <td>
+                                <div class="crud-div d-flex align-items-stretch w-100 justify-content-center">
+                                    <div class="w-100 d-flex align-items-center justify-content-center edit-modal-btn" data-id="@item.Id">
+                                        <a class="text-decoration-none">@Localizer["edit"]</a>
+                                    </div>
+                                    <div class="w-100 d-flex align-items-center justify-content-center delete-btn" data-id="@item.Id">
+                                        <a class="text-decoration-none">@Localizer["delete"]</a>
+                                    </div>
                                 </div>
-                                <div class="w-100 d-flex align-items-center justify-content-center delete-btn" data-id="@item.Id">
-                                    <a class="text-decoration-none">Delete</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    }
                 }
-            }
             </tbody>
         </table>
     </div>
@@ -99,7 +100,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Create a new item</h5>
+                            <h5 class="modal-title">@Localizer["createNew"]</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -108,10 +109,10 @@
                             <partial name="ItemPartial/_ItemCreateForm" model="@(new Item()
                                                                                {
 
-                                                                               })"/>
+                                                                               })" />
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["close"]</button>
                         </div>
                     </div>
                 </div>
@@ -124,7 +125,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Edit an item</h5>
+                            <h5 class="modal-title">@Localizer["editItem"]</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -133,7 +134,7 @@
                             <!--Modal Body will be added here when clicked on the edit button-->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["close"]</button>
                         </div>
                     </div>
                 </div>

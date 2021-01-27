@@ -1,4 +1,6 @@
 ﻿$(function () {
+    //get current culture/lang
+    const culture = $("#culture").children("option:selected").val();
 
     function setDateTimeVal(result, date, time) {
         result.val(date.val() + "T" + time.val());
@@ -99,8 +101,8 @@
 
                     let timer = 5;
                     const countdown = setInterval(function () {
-                            if (timer === 0) {
-                                $(anchor).text("Delete");
+                        if (timer === 0) {
+                            culture === "sq" ? $(anchor).text("Fshij") : $(anchor).text("Delete");
                                 $(deleteBtns[i]).removeAttr("style");
                                 clearInterval(countdown);
                             } else {

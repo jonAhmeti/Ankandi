@@ -1,5 +1,6 @@
-﻿@using System.Collections
-@model Event
+﻿@model Event
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+
 @{
     var startTime = (Model.StartDate.Hour < 10 ?
         $"0{Model.StartDate.Hour}" : Model.StartDate.Hour.ToString())
@@ -18,11 +19,11 @@
     <input hidden asp-for="AuctionId" />
     <input hidden asp-for="ItemId" />
     <div class="form-group row">
-        <label asp-for="StartDate" class="col col-12"></label>
+        <label class="col col-12">@Localizer["startDate"]</label>
         <div class="col col-7">
             <div class="input-group w-auto">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Date</span>
+                    <span class="input-group-text">@Localizer["date"]</span>
                 </div>
                 <!--input startDate-->
                 <input asp-for="StartDate.Date" id="editStartDate" type="date" class="form-control" />
@@ -31,7 +32,7 @@
         <div class="col col-5">
             <div class="input-group  w-auto">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Time</span>
+                    <span class="input-group-text">@Localizer["time"]</span>
                 </div>
                 <!--input startTime-->
                 <input value="@startTime" id="editStartTime" type="time" class="form-control" />
@@ -40,11 +41,11 @@
         <input asp-for="StartDate" hidden name="StartDate" id="editStartDateTime" />
     </div>
     <div class="form-group row">
-        <label asp-for="EndDate" class="col col-12"></label>
+        <label class="col col-12">@Localizer["endDate"]</label>
         <div class="col col-7">
             <div class="input-group w-auto">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Date</span>
+                    <span class="input-group-text">@Localizer["date"]</span>
                 </div>
                 <!--input startDate-->
                 <input asp-for="EndDate.Date" id="editEndDate" type="date" class="form-control" />
@@ -53,7 +54,7 @@
         <div class="col col-5">
             <div class="input-group  w-auto">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">Time</span>
+                    <span class="input-group-text">@Localizer["time"]</span>
                 </div>
                 <!--input startTime-->
                 <input value="@endTime" id="editEndTime" type="time" class="form-control" />
@@ -64,12 +65,12 @@
     <div class="form-group row">
         <!--Event current price and minimum price increment amount inputs-->
         <div class="w-auto col col-6">
-            <label asp-for="MinPriceIncrementAmount" class="form-control-plaintext"></label>
+            <label class="form-control-plaintext">@Localizer["minPriceInc"]</label>
             <!--input sold price-->
             <input asp-for="MinPriceIncrementAmount" class="form-control" />
         </div>
         <div class="w-auto col col-6">
-            <label asp-for="CurrentPrice" class="form-control-plaintext"></label>
+            <label class="form-control-plaintext">@Localizer["currentPrice"]</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">€</span>
@@ -82,11 +83,11 @@
     <div class="form-group row">
         <!--Top bidder input-->
         <div class="w-auto col col-12">
-            <label asp-for="TopBidder" class="form-control-plaintext"></label>
+            <label class="form-control-plaintext">@Localizer["topBidder"]</label>
             <input asp-for="TopBidder" placeholder="make dropdown with winner's id" class="form-control" />
         </div>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">@Localizer["edit"]</button>
     </div>
 </form>

@@ -7,9 +7,22 @@
     var cultureList = LocalizationOptions.Value.SupportedUICultures.Select(lang => new SelectListItem(Localizer.GetString(lang.Name), lang.Name)).ToList();
     var returnUrl = string.IsNullOrWhiteSpace(Context.Request.Path) ? "~/" : $"{Context.Request.Path.Value}{Context.Request.QueryString}";
 }
-<div class="d-flex align-items-center container">
-    <form asp-controller="Home" asp-action="ChangeLanguage" asp-route-returnUrl="@returnUrl" method="post">
-        <select name="culture" asp-for="@culture.RequestCulture.UICulture.Name" asp-items="@cultureList"
+<style>
+    #culture:focus {
+        box-shadow: unset;
+    }
+    #culture:hover {
+        cursor: pointer;
+    }
+    #cultureWrap:hover {
+        border-radius: 10px;
+        border-top: 5px solid #090c08;
+        border-bottom: 5px solid #090c08;
+    }
+</style>
+<div class="d-flex align-items-center align-self-stretch" style="background-color: #242424;" >
+    <form id="cultureWrap" asp-controller="Home" asp-action="ChangeLanguage" asp-route-returnUrl="@returnUrl" method="post">
+        <select name="culture" asp-for="@culture.RequestCulture.UICulture.Name" asp-items="@cultureList" class="form-control text-white" id="culture" style="background-color: #242424; border-color: #242424;"
                 onchange="this.form.submit();"></select>
     </form>
 </div>

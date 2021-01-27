@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Event>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Index";
 }
@@ -48,10 +49,10 @@
 <div class="h-100 w-100">
     <div class="aboveList d-flex container-fluid py-5 justify-content-between">
         <a class="badge-pill text-decoration-none py-2 create-modal-btn">
-            Create a new event
+            @Localizer["create"]
         </a>
         <a asp-controller="Home" asp-action="Index" class="badge-pill text-decoration-none py-2">
-            Back to admin page
+            @Localizer["backToHome"]
         </a>
     </div>
     <div>
@@ -77,10 +78,10 @@
                             <td>
                                 <div class="crud-div d-flex align-items-stretch w-100 justify-content-center">
                                     <div class="w-100 d-flex align-items-center justify-content-center edit-modal-btn" data-id="@item.Id">
-                                        <a class="text-decoration-none">Edit</a>
+                                        <a class="text-decoration-none">@Localizer["edit"]</a>
                                     </div>
                                     <div class="w-100 d-flex align-items-center justify-content-center delete-btn" data-id="@item.Id">
-                                        <a class="text-decoration-none">Delete</a>
+                                        <a class="text-decoration-none">@Localizer["delete"]</a>
                                     </div>
                                 </div>
                             </td>
@@ -109,11 +110,11 @@
                                 await Html.RenderPartialAsync(
                                     "EventPartial/_EventCreateForm",
                                     new Event(),
-                                    new ViewDataDictionary (ViewData));
+                                    new ViewDataDictionary(ViewData));
                             }
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["close"]</button>
                         </div>
                     </div>
                 </div>
@@ -126,7 +127,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Edit an event</h5>
+                            <h5 class="modal-title">@Localizer["editHeaderEvent"]</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -135,7 +136,7 @@
                             <!--Modal Body will be added here when clicked on the edit button-->
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">@Localizer["close"]</button>
                         </div>
                     </div>
                 </div>
