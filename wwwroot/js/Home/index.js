@@ -32,7 +32,10 @@ document.onkeydown = evt => {
 };
 
 $(function() {
-
+    $("#_login .modal-button").on("click",
+        function() {
+            $(".scroll-down").css("z-index", 0);
+        });
     //get current culture/lang
     const culture = $("#culture").children("option:selected").val();
 
