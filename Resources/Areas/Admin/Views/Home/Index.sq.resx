@@ -117,13 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="amount" xml:space="preserve">
+    <value>Vlera</value>
+  </data>
   <data name="auction" xml:space="preserve">
-    <value>Ankande</value>
+    <value>Ankand</value>
+  </data>
+  <data name="bidHistory" xml:space="preserve">
+    <value>Historiku i bidave</value>
+  </data>
+  <data name="date" xml:space="preserve">
+    <value>Data</value>
   </data>
   <data name="event" xml:space="preserve">
-    <value>Evente</value>
+    <value>Event</value>
   </data>
   <data name="item" xml:space="preserve">
-    <value>Produkte</value>
+    <value>Produkt</value>
+  </data>
+  <data name="user" xml:space="preserve">
+    <value>ID e bider</value>
+  </data>
+  <data name="withdrawHistory" xml:space="preserve">
+    <value>Historiku i tërheqjeve</value>
   </data>
 </root>

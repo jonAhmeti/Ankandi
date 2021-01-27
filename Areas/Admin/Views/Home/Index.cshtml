@@ -1,4 +1,6 @@
-﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
+﻿@using System.Collections
+@model Dictionary<string, object>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Index";
 }
@@ -27,6 +29,8 @@
             color: #ffffff;
             white-space: nowrap;
             box-shadow: inset 5px 0px 10px black;
+            margin-top: auto;
+            margin-bottom: auto;
         }
 
             .customList ol.gradient-list > li::before, ol.gradient-list > li::after {
@@ -99,10 +103,82 @@
         box-shadow: inset 0 0 1em black;
         width: 20%;
     }
+
+    #bidsTable th, #withdrawsTable th {
+        position: sticky;
+        top: 0;
+    }
+    #bidsTable th, #withdrawsTable th, #bidsTable td, #withdrawsTable td {
+        text-align: center;
+    }
+        #bidsWrapper, #withdrawsWrapper {
+            max-height: 75vh;
+            min-height: 115px;
+            overflow-y: auto;
+        }
 </style>
 
 <div class="h-100 d-flex flex-row">
-    <div class="w-100 h-100"></div>
+    <div class="w-100 h-100">
+        <div class="d-flex align-items-stretch h-100 p-4">
+            <div class="flex-fill mr-2">
+                <h4 class="text-center">@Localizer["bidHistory"]</h4>
+                <div id="bidsWrapper">
+                    <table id="bidsTable" class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>@Localizer["user"]</th>
+                                <th>@Localizer["date"]</th>
+                                <th>@Localizer["amount"]</th>
+                                <th>@Localizer["event"]</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @{
+                            foreach (var item in (IEnumerable<BidHistory>)Model["bids"])
+                            {
+                                <tr>
+                                    <td>@item.UserId</td>
+                                    <td>@item.BidDate</td>
+                                    <td>@decimal.Truncate(item.BidAmount) €</td>
+                                    <td>@item.EventId</td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="flex-fill ml-2">
+                <h4 class="text-center">@Localizer["withdrawHistory"]</h4>
+                <div id="withdrawsWrapper">
+                    <table id="withdrawsTable" class="table">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>@Localizer["user"]</th>
+                            <th>@Localizer["date"]</th>
+                            <th>@Localizer["amount"]</th>
+                            <th>@Localizer["event"]</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @{
+                            foreach (var item in (IEnumerable<WithdrawHistory>)Model["withdraws"])
+                            {
+                                <tr>
+                                    <td>@item.UserId</td>
+                                    <td>@item.WithdrawDate</td>
+                                    <td>@decimal.Truncate(item.WithdrawAmount) €</td>
+                                    <td>@item.EventId</td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="bg-dark h-100 listContainer customList">
         <ol class="gradient-list customList d-flex flex-column h-100">
             <li><a asp-controller="Auction" asp-action="Index">@Localizer["auction"]</a></li>
