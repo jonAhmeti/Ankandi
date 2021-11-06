@@ -32,9 +32,12 @@ namespace Auction.Areas.Bidder.Controllers
         {
             var activeEvents = new List<Event>();
             var activeAuctions = Mapper.ActiveAuctionsMap(await _bllActiveAuctions.GetAllAsync());
+            if (activeAuctions == null)
+                return View(null);              // added now
+
             foreach (var obj in activeAuctions)
             {
-                if (obj.Opened)
+                if (obj.Open)
                 {
                     activeEvents = Mapper.EventsMap(await _bllEvents.GetAllByAuctionId(obj.AuctionId)).ToList();
                 }
@@ -43,7 +46,7 @@ namespace Auction.Areas.Bidder.Controllers
             var itemsBo = new List<BO.Item>();
             foreach (var obj in activeEvents)
             {
-               itemsBo.Add(await _bllItems.GetAsync(obj.ItemId));
+                itemsBo.Add(await _bllItems.GetAsync(obj.ItemId));
             }
 
             ViewBag.Items = Mapper.ItemsMap(itemsBo);
@@ -63,28 +66,31 @@ namespace Auction.Areas.Bidder.Controllers
         [HttpGet("GetActiveAuctionDetails")]
         public async Task<Dictionary<string, object>> GetActiveAuctionDetails()
         {
-            var activeAuction = (await _bllActiveAuctions.GetAllAsync()).FirstOrDefault();
-
-            var events = Mapper.EventsMap(await _bllEvents.GetAllByAuctionId(activeAuction.AuctionId)).ToList();
+            var activeAuctions = (await _bllActiveAuctions.GetAllAsync());
+            var activeEvents = new List<Event>();
+            foreach (var activeAuction in activeAuctions)
+            {
+                activeEvents.AddRange(Mapper.EventsMap(await _bllEvents.GetAllByAuctionId(activeAuction.AuctionId)));
+            }
             var items = new List<Item>();
-            foreach (var objEvent in events)
+            foreach (var objEvent in activeEvents)
             {
                 items.Add(Mapper.Item(await _bllItems.GetAsync(objEvent.ItemId)));
             }
 
-            if (activeAuction.Closed)
+            if (activeAuctions.Count() == 0 || activeEvents.Count() == 0 || items == null) // RE-check
             {
                 return new Dictionary<string, object>()
                 {
                     {"closed", null},
-                    {"events", events},
+                    {"events", activeEvents},
                     {"items",items}
                 };
             }
 
             return new Dictionary<string, object>()
             {
-                {"events", events},
+                {"events", activeEvents},
                 {"items",items}
             };
         }
@@ -124,7 +130,6 @@ namespace Auction.Areas.Bidder.Controllers
             var successEvent = await _bllEvents.UpdateAsync(new BO.Event()
             {
                 CurrentPrice = obj.BidAmount,
-                TopBidder = bidderId,
                 Id = objEvent.Id,
                 ItemId = objEvent.ItemId,
                 AuctionId = objEvent.AuctionId,
@@ -136,7 +141,7 @@ namespace Auction.Areas.Bidder.Controllers
             });
 
             //register bidHistory
-            var successBid = await _bllBidHistories.AddAsync(new BO.BidHistory()
+            var successBid = await _bllBidHistories.AddAsync(new BO.Bids()
             {
                 AuctionId = obj.AuctionId,
                 EventId = obj.EventId,
@@ -170,7 +175,6 @@ namespace Auction.Areas.Bidder.Controllers
             var updatedEvent = new BO.Event()
             {
                 CurrentPrice = throwbackBidHistory.BidAmount,
-                TopBidder = throwbackBidHistory.UserId,
                 Id = objEvent.Id,
                 ItemId = objEvent.ItemId,
                 AuctionId = objEvent.AuctionId,

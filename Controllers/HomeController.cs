@@ -60,6 +60,13 @@ namespace Auction.Controllers
         public async Task<IActionResult> Login(string username, string password)
         {
             var user = await _bllUsers.GetByUsernameAsync(username);
+            //var user = new BO.Users() {
+            //    Id = 1,
+            //    Name = "TempName",
+            //    RoleId = 2,
+            //    Username = "TempUsername",
+            //    Password = "a"
+            //};
             if (user != null && user.Password == password)
             {
                 var claims = new[]
@@ -94,7 +101,7 @@ namespace Auction.Controllers
             {
                 Username = username,
                 Password = password,
-                Dob = dob,
+                DoB = dob,
                 Name = name,
                 RoleId = 2
             });

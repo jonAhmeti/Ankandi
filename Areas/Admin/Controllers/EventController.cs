@@ -43,8 +43,7 @@ namespace Auction.Areas.Admin.Controllers
                 ItemId = obj.ItemId,
                 AuctionId = obj.AuctionId,
                 CurrentPrice = obj.CurrentPrice < item.StartPrice ? item.StartPrice : obj.CurrentPrice,
-                MinPriceIncrementAmount = obj.MinPriceIncrementAmount,
-                TopBidder = obj.TopBidder
+                MinPriceIncrementAmount = obj.MinPriceIncrementAmount
             });
             return RedirectToAction("Index");
         }
@@ -62,7 +61,6 @@ namespace Auction.Areas.Admin.Controllers
                 EndDate = obj.EndDate,
                 MinPriceIncrementAmount = obj.MinPriceIncrementAmount,
                 CurrentPrice = obj.CurrentPrice,
-                TopBidder = obj.TopBidder,
                 Lud = obj.Lud,
                 Lun = obj.Lun
             });
@@ -79,8 +77,7 @@ namespace Auction.Areas.Admin.Controllers
                 StartDate = obj.StartDate,
                 EndDate = obj.EndDate,
                 MinPriceIncrementAmount = obj.MinPriceIncrementAmount,
-                CurrentPrice = obj.CurrentPrice,
-                TopBidder = obj.TopBidder
+                CurrentPrice = obj.CurrentPrice
             });
             return RedirectToAction("Index");
         }

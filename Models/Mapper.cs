@@ -10,16 +10,21 @@ namespace Auction.Models
     {
         public static IEnumerable<AuctionData> AuctionDataMap(IEnumerable<BO.AuctionData> list)
         {
+            if (list == null) return null;
+
             var mappedList = list.Select(obj => new AuctionData()
             {
-                Id = obj.Id, StartDate = DateTime.Parse(obj.StartDate.ToString()),
+                Id = obj.Id,
+                StartDate = DateTime.Parse(obj.StartDate.ToString()),
                 EndDate = DateTime.Parse(obj.EndDate.ToString())
             });
 
             return mappedList;
         }
-        public static IEnumerable<BidHistory> BidsMap(IEnumerable<BO.BidHistory> list)
+        public static IEnumerable<BidHistory> BidsMap(IEnumerable<BO.Bids> list)
         {
+            if (list == null) return null;
+
             var mappedList = list.Select(obj => new BidHistory()
             {
                 Id = obj.Id,
@@ -34,6 +39,8 @@ namespace Auction.Models
 
         public static IEnumerable<Event> EventsMap(IEnumerable<BO.Event> list)
         {
+            if (list == null) return null;
+
             var mappedList = list.Select(obj => new Event()
             {
                 Id = obj.Id,
@@ -43,7 +50,6 @@ namespace Auction.Models
                 EndDate = obj.EndDate,
                 Lun = obj.Lun,
                 Lud = obj.Lud,
-                TopBidder = obj.TopBidder,
                 CurrentPrice = obj.CurrentPrice,
                 MinPriceIncrementAmount = obj.MinPriceIncrementAmount
             });
@@ -52,6 +58,8 @@ namespace Auction.Models
 
         public static Event Event(BO.Event obj)
         {
+            if (obj == null) return null;
+
             return new Event()
             {
                 Id = obj.Id,
@@ -60,7 +68,6 @@ namespace Auction.Models
                 StartDate = obj.StartDate,
                 EndDate = obj.EndDate,
                 CurrentPrice = obj.CurrentPrice,
-                TopBidder = obj.TopBidder,
                 MinPriceIncrementAmount = obj.MinPriceIncrementAmount,
                 Lun = obj.Lun,
                 Lud = obj.Lud
@@ -69,6 +76,8 @@ namespace Auction.Models
 
         public static IEnumerable<Item> ItemsMap(IEnumerable<BO.Item> list)
         {
+            if (list == null) return null;
+
             var mappedList = list.Select(obj => new Item()
             {
                 Id = obj.Id,
@@ -89,6 +98,8 @@ namespace Auction.Models
         }
         public static Item Item(BO.Item obj)
         {
+            if (obj == null) return null;
+
             return new Item()
             {
                 Id = obj.Id,
@@ -108,6 +119,8 @@ namespace Auction.Models
 
         public static IEnumerable<Users> UsersMap(IEnumerable<BO.Users> list)
         {
+            if (list == null) return null;
+
             var mappedList = list.Select(obj => new Users()
             {
                 Id = obj.Id,
@@ -115,7 +128,7 @@ namespace Auction.Models
                 Username = obj.Username,
                 Password = obj.Password,
                 Name = obj.Name,
-                Dob = DateTime.Parse(obj.Dob.ToString()),
+                Dob = DateTime.Parse(obj.DoB.ToString()),
                 InD = obj.InD,
             });
 
@@ -123,6 +136,8 @@ namespace Auction.Models
         }
         public static IEnumerable<WithdrawHistory> WithdrawsMap(IEnumerable<BO.WithdrawHistory> list)
         {
+            if (list == null) return null;
+
             var mappedList = list.Select(obj => new WithdrawHistory()
             {
                 Id = obj.Id,
@@ -137,13 +152,13 @@ namespace Auction.Models
         }
         public static IEnumerable<ActiveAuction> ActiveAuctionsMap(IEnumerable<BO.ActiveAuction> list)
         {
+            if (list == null) return null;
+
             var mappedList = list.Select(obj => new ActiveAuction()
             {
                 AuctionId = obj.AuctionId,
-                Opened = obj.Opened,
-                OpenedBy = obj.OpenedBy,
-                Closed = obj.Closed,
-                ClosedBy = obj.ClosedBy
+                Open = obj.Open,
+                OpenedBy = obj.OpenedBy
             });
 
             return mappedList;

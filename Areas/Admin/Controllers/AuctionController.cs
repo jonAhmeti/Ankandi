@@ -80,7 +80,7 @@ namespace Auction.Areas.Admin.Controllers
 
             //Add Selected Active Auction To DB
             var successAdd = await _bllActiveAuction.AddAsync(new BO.ActiveAuction()
-                {AuctionId = id, Closed = true, Opened = false, ClosedBy = 1, OpenedBy = 1});
+                {AuctionId = id, Open = false, ClosedBy = 1, OpenedBy = 1});
             return RedirectToAction("Index");
         }
 

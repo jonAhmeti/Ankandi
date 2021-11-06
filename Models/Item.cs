@@ -29,7 +29,7 @@ namespace Auction.Models
         public string MeasurementUnits { get; set; }
 
         [Required]
-        public double Amount { get; set; }
+        public int Amount { get; set; }
         public DateTime? InD { get; set; }
         public DateTime? Lud { get; set; }
         public int? Lun { get; set; }
