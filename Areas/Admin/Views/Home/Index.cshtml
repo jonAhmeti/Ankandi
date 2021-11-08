@@ -135,7 +135,7 @@
                         </thead>
                         <tbody>
                         @{
-                            foreach (var item in (IEnumerable<BidHistory>)Model["bids"])
+                            foreach (var item in (IEnumerable<Bids>)Model["bids"])
                             {
                                 <tr>
                                     <td>@item.UserId</td>
@@ -163,7 +163,7 @@
                         </thead>
                         <tbody>
                         @{
-                            foreach (var item in (IEnumerable<WithdrawHistory>)Model["withdraws"])
+                            foreach (var item in (IEnumerable<Withdrawals>)Model["withdrawals"])
                             {
                                 <tr>
                                     <td>@item.UserId</td>

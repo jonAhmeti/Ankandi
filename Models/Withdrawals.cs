@@ -2,7 +2,7 @@
 
 namespace Auction.Models
 {
-    public class WithdrawHistory
+    public class Withdrawals
     {
         public int Id { get; set; }
         public DateTime WithdrawDate { get; set; }

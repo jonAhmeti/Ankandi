@@ -113,8 +113,7 @@
                             url: "/Bidder/Withdraw",
                             data: {
                                 auctionId: response.auctionId,
-                                eventId: response.id,
-                                username: $("#dropdownProfile").text().trim()
+                                eventId: response.id
                             },
                             success: function (response) {
                                 if (response !== null) {

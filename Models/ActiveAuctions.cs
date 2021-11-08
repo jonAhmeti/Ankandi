@@ -1,6 +1,6 @@
 ﻿namespace Auction.Models
 {
-    public class ActiveAuction
+    public class ActiveAuctions
     {
         public int AuctionId { get; set; }
         public bool Open { get; set; }

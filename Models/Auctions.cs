@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Auction.Models
 {
-    public class AuctionData
+    public class Auctions
     {
         [DisplayName("Start date")]
         public DateTime StartDate { get; set; }

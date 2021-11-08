@@ -124,7 +124,7 @@
     <value>Auction</value>
   </data>
   <data name="bidHistory" xml:space="preserve">
-    <value>Bid history</value>
+    <value>Bids</value>
   </data>
   <data name="date" xml:space="preserve">
     <value>Date</value>
@@ -139,6 +139,6 @@
     <value>User ID</value>
   </data>
   <data name="withdrawHistory" xml:space="preserve">
-    <value>Withdraw history</value>
+    <value>Withdrawals</value>
   </data>
 </root>

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Auction.Models;
 using Microsoft.AspNetCore.Mvc;
-using AuctionData = Auction.Models.AuctionData;
+using Auctions = Auction.Models.Auctions;
 
 namespace Auction.Areas.Admin.Controllers
 {
@@ -10,10 +10,10 @@ namespace Auction.Areas.Admin.Controllers
     [Route("Admin/Auction")]
     public class AuctionController : Controller
     {
-        private readonly BLL.AuctionData _bllAuctionData;
+        private readonly BLL.Auctions _bllAuctionData;
         private readonly BLL.ActiveAuctions _bllActiveAuction;
 
-        public AuctionController(BLL.AuctionData bllAuctionData, BLL.ActiveAuctions bllActiveAuction)
+        public AuctionController(BLL.Auctions bllAuctionData, BLL.ActiveAuctions bllActiveAuction)
         {
             _bllAuctionData = bllAuctionData;
             _bllActiveAuction = bllActiveAuction;
@@ -30,9 +30,9 @@ namespace Auction.Areas.Admin.Controllers
 
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(AuctionData obj)
+        public async Task<IActionResult> Create(Auctions obj)
         {
-            var result = await _bllAuctionData.AddAsync(new BO.AuctionData()
+            var result = await _bllAuctionData.AddAsync(new BO.Auctions()
             {
                 StartDate = obj.StartDate,
                 EndDate = obj.EndDate
@@ -44,7 +44,7 @@ namespace Auction.Areas.Admin.Controllers
         public async Task<PartialViewResult> Edit(int id)
         {
             var obj = await _bllAuctionData.GetAsync(id);
-            return PartialView("AuctionDataPartial/_AuctionDataEditForm", new AuctionData()
+            return PartialView("AuctionDataPartial/_AuctionDataEditForm", new Auctions()
             {
                 StartDate = DateTime.Parse(obj.StartDate.ToString()),
                 EndDate = DateTime.Parse(obj.EndDate.ToString())
@@ -52,9 +52,9 @@ namespace Auction.Areas.Admin.Controllers
         }
 
         [HttpPost("Edit")]
-        public async Task<IActionResult> Edit(AuctionData obj)
+        public async Task<IActionResult> Edit(Auctions obj)
         {
-            var result = await _bllAuctionData.UpdateAsync(new BO.AuctionData()
+            var result = await _bllAuctionData.UpdateAsync(new BO.Auctions()
             {
                 Id = obj.Id,
                 StartDate = obj.StartDate,
@@ -79,7 +79,7 @@ namespace Auction.Areas.Admin.Controllers
             var successDelete = await _bllActiveAuction.DeleteAsync();
 
             //Add Selected Active Auction To DB
-            var successAdd = await _bllActiveAuction.AddAsync(new BO.ActiveAuction()
+            var successAdd = await _bllActiveAuction.AddAsync(new BO.ActiveAuctions()
                 {AuctionId = id, Open = false, ClosedBy = 1, OpenedBy = 1});
             return RedirectToAction("Index");
         }

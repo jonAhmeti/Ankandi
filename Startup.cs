@@ -51,12 +51,12 @@ namespace Auction
 
             services.AddSingleton<DAL.DbContext>();
             services.AddTransient<BLL.Users>();
-            services.AddTransient<BLL.AuctionData>();
+            services.AddTransient<BLL.Auctions>();
             services.AddTransient<BLL.Items>();
             services.AddTransient<BLL.Events>();
             services.AddTransient<BLL.ActiveAuctions>();
-            services.AddTransient<BLL.BidHistories>();
-            services.AddTransient<BLL.Withdraws>();
+            services.AddTransient<BLL.Bids>();
+            services.AddTransient<BLL.Withdrawals>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

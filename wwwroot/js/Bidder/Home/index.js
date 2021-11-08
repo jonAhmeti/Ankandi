@@ -64,7 +64,7 @@
                                             <h4 class="card-title" style="font-weight:bold;">${objItem.name}</h5>
                                             <h6 style="color:#00A8E8;font-weight:bold;margin:0;">Current price:<span id="currentPrice_${
                         iterator}"> ${
-                        objEventDetails.currentPrice}</span>€</h6>
+                        objEventDetails.currentPrice}</span>€<span id="infoCurrentPrice"></span></h6>
                                             <h7 style="color:#294D4A;">Start price: ${objItem.startPrice}</h7>
                                             <form class="w-100 input-group mt-2">
                                                 <a class="btn btn-primary my-1">Details</a>
@@ -92,6 +92,8 @@
                     //Bid Button
                     const minimumBidBtns = ("div.card a:contains(Bid)");
                     for (let i = 0; i < response.events.length; i++) {
+
+                        $($(minimumBidBtns)[i]).off();
                         $($(minimumBidBtns)[i]).on("click",
                             function() {
                                 $.ajax({
@@ -106,9 +108,9 @@
                                     },
                                     success: function(response) {
                                         if (response.priceChanged) {
-                                            $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
-                                            $("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
-                                            $("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
+                                            $("#currentPrice_" + i).text(`${response.currentPrice}`);
+                                            $("#currentPrice_" + i).css({ "background-color": "rgba(255,255,0,.7)" });
+                                            $("#currentPrice_" + i).animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
                                             $("#infoCurrentPrice").css("padding-left", ".5em");
                                             culture === "sq"
                                                 ? $("#infoCurrentPrice")
@@ -138,7 +140,8 @@
                     //Bid Button
                     const minimumBidBtns = ("div.card a:contains(Bid)");
                     for (let i = 0; i < response.events.length; i++) {
-                        $($(minimumBidBtns)[i]).on("click",
+                        $($(minimumBidBtns)[i]).off();
+                        $(minimumBidBtns[i]).on("click",
                             function () {
                                 $.ajax({
                                     type: "POST",
@@ -151,9 +154,9 @@
                                     },
                                     success: function (response) {
                                         if (response.priceChanged) {
-                                            $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
-                                            $("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
-                                            $("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
+                                            $("#currentPrice_" + i).text(` ${response.currentPrice}`);
+                                            $("#currentPrice_" + i).css({ "background-color": "rgba(255,255,0,.7)" });
+                                            $("#currentPrice_" + i).animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
                                             $("#infoCurrentPrice").css("padding-left", ".5em");
                                             culture === "sq" ? $("#infoCurrentPrice").html('<i class="fas fa-exclamation-triangle"></i> Çmimi ka ndryshuar para se të përditësohet!<br />') :
                                                 $("#infoCurrentPrice").html(
@@ -206,6 +209,7 @@
                                 //Bid Button
                                 const minimumBidBtns = ("div.card a:contains(Bid)");
                                 for (let i = 0; i < response.events.length; i++) {
+                                    $($(minimumBidBtns)[i]).off();
                                     $($(minimumBidBtns)[i]).on("click",
                                         function () {
                                             $.ajax({
@@ -220,9 +224,9 @@
                                                 },
                                                 success: function (response) {
                                                     if (response.priceChanged) {
-                                                        $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
-                                                        $("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
-                                                        $("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
+                                                        $(`#currentPrice_${i}`).text(`${response.currentPrice}`);
+                                                        $(`#currentPrice_${i}`).css({ "background-color": "rgba(255,255,0,.7)" });
+                                                        $(`#currentPrice_${i}`).animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
                                                         $("#infoCurrentPrice").css("padding-left", ".5em");
                                                         culture === "sq"
                                                             ? $("#infoCurrentPrice")
@@ -231,9 +235,9 @@
                                                             : $("#infoCurrentPrice").html(
                                                                 '<i class="fas fa-exclamation-triangle"></i> Someone else placed a bid before the price refreshed!<br />');
                                                     } else {
-                                                        $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
-                                                        $("#CurrentPrice").css({ "background-color": "rgba(0,0,255,.7)" });
-                                                        $("#CurrentPrice").animate({ backgroundColor: "rgba(0,255,0,0)" }, 1500);
+                                                        $(`#currentPrice_${i}`).text(`Current price: ${response.currentPrice}€`);
+                                                        $(`#currentPrice_${i}`).css({ "background-color": "rgba(0,0,255,.7)" });
+                                                        $(`#currentPrice_${i}`).animate({ backgroundColor: "rgba(0,255,0,0)" }, 1500);
                                                         $("#infoCurrentPrice").removeAttr("style").html("");
                                                     }
                                                 }
@@ -252,6 +256,7 @@
                                 //Bid Button
                                 const minimumBidBtns = ("div.card a:contains(Bid)");
                                 for (let i = 0; i < response.events.length; i++) {
+                                    $($(minimumBidBtns)[i]).off();
                                     $($(minimumBidBtns)[i]).on("click",
                                         function () {
                                             $.ajax({
@@ -265,17 +270,17 @@
                                                 },
                                                 success: function (response) {
                                                     if (response.priceChanged) {
-                                                        $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
-                                                        $("#CurrentPrice").css({ "background-color": "rgba(255,255,0,.7)" });
-                                                        $("#CurrentPrice").animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
+                                                        $(`#currentPrice_${i}`).text(` ${response.currentPrice}`);
+                                                        $(`#currentPrice_${i}`).css({ "background-color": "rgba(255,255,0,.7)" });
+                                                        $(`#currentPrice_${i}`).animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
                                                         $("#infoCurrentPrice").css("padding-left", ".5em");
                                                         culture === "sq" ? $("#infoCurrentPrice").html('<i class="fas fa-exclamation-triangle"></i> Çmimi ka ndryshuar para se të përditësohet!<br />') :
                                                             $("#infoCurrentPrice").html(
                                                                 '<i class="fas fa-exclamation-triangle"></i> Someone else placed a bid before the price refreshed!<br />');
                                                     } else {
-                                                        $("#CurrentPrice").text(`Current price: ${response.currentPrice}€`);
-                                                        $("#CurrentPrice").css({ "background-color": "rgba(0,0,255,.7)" });
-                                                        $("#CurrentPrice").animate({ backgroundColor: "rgba(0,255,0,0)" }, 1500);
+                                                        $(`#currentPrice_${i}`).text(` ${response.currentPrice}`);
+                                                        $(`#currentPrice_${i}`).css({ "background-color": "rgba(0,0,255,.7)" });
+                                                        $(`#currentPrice_${i}`).animate({ backgroundColor: "rgba(0,255,0,0)" }, 1500);
                                                         $("#infoCurrentPrice").removeAttr("style").html("");
                                                     }
                                                 }

@@ -14,11 +14,11 @@ namespace Auction.Areas.Bidder.Controllers
         private readonly BLL.ActiveAuctions _bllActiveAuctions;
         private readonly BLL.Events _bllEvents;
         private readonly BLL.Items _bllItems;
-        private readonly BLL.BidHistories _bllBidHistories;
+        private readonly BLL.Bids _bllBidHistories;
         private readonly BLL.Users _bllUsers;
-        private readonly BLL.Withdraws _bllWithdraws;
+        private readonly BLL.Withdrawals _bllWithdraws;
 
-        public HomeController(BLL.ActiveAuctions bllActiveAuctions, BLL.Events bllEvents, BLL.Items bllItems, BLL.BidHistories bllBidHistories, BLL.Users bllUsers, BLL.Withdraws bllWithdraws)
+        public HomeController(BLL.ActiveAuctions bllActiveAuctions, BLL.Events bllEvents, BLL.Items bllItems, BLL.Bids bllBidHistories, BLL.Users bllUsers, BLL.Withdrawals bllWithdraws)
         {
             _bllActiveAuctions = bllActiveAuctions;
             _bllEvents = bllEvents;
@@ -30,7 +30,7 @@ namespace Auction.Areas.Bidder.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var activeEvents = new List<Event>();
+            var activeEvents = new List<Events>();
             var activeAuctions = Mapper.ActiveAuctionsMap(await _bllActiveAuctions.GetAllAsync());
             if (activeAuctions == null)
                 return View(null);              // added now
@@ -43,7 +43,7 @@ namespace Auction.Areas.Bidder.Controllers
                 }
             }
 
-            var itemsBo = new List<BO.Item>();
+            var itemsBo = new List<BO.Items>();
             foreach (var obj in activeEvents)
             {
                 itemsBo.Add(await _bllItems.GetAsync(obj.ItemId));
@@ -67,12 +67,12 @@ namespace Auction.Areas.Bidder.Controllers
         public async Task<Dictionary<string, object>> GetActiveAuctionDetails()
         {
             var activeAuctions = (await _bllActiveAuctions.GetAllAsync());
-            var activeEvents = new List<Event>();
+            var activeEvents = new List<Events>();
             foreach (var activeAuction in activeAuctions)
             {
                 activeEvents.AddRange(Mapper.EventsMap(await _bllEvents.GetAllByAuctionId(activeAuction.AuctionId)));
             }
-            var items = new List<Item>();
+            var items = new List<Items>();
             foreach (var objEvent in activeEvents)
             {
                 items.Add(Mapper.Item(await _bllItems.GetAsync(objEvent.ItemId)));
@@ -97,7 +97,7 @@ namespace Auction.Areas.Bidder.Controllers
 
         //Method that returns the event object when 'Details' of an event/item is clicked in the bidder's home.
         [HttpGet("GetEventDetails")]
-        public async Task<Event> GetEventDetails(int id, string username = "")
+        public async Task<Events> GetEventDetails(int id, string username = "")
         {
             var objEvent = Mapper.Event(await _bllEvents.GetAsync(id));
             if (string.IsNullOrWhiteSpace(username))
@@ -114,7 +114,7 @@ namespace Auction.Areas.Bidder.Controllers
 
         //Bid method that calls the bid procedure and returns the updated event.
         [HttpPost("Bid")]
-        public async Task<Event> Bid(BidHistory obj)
+        public async Task<Events> Bid(Bids obj)
         {
             var bidderId = (await _bllUsers.GetByUsernameAsync(obj.Username)).Id;
             var objEvent = await GetEventDetails(obj.EventId);
@@ -127,7 +127,7 @@ namespace Auction.Areas.Bidder.Controllers
             }
 
             //update event's currentPrice property and set TopBidder
-            var successEvent = await _bllEvents.UpdateAsync(new BO.Event()
+            var successEvent = await _bllEvents.UpdateAsync(new BO.Events()
             {
                 CurrentPrice = obj.BidAmount,
                 Id = objEvent.Id,
@@ -156,23 +156,26 @@ namespace Auction.Areas.Bidder.Controllers
 
         //Withdraw method that registers user's bid withdrawal and sets back currentPrice to highest other bidder.
         [HttpPost("Withdraw")]
-        public async Task<Event> Withdraw(WithdrawHistory obj)
+        public async Task<Events> Withdraw(Withdrawals obj)
         {
-            var bidderId = (await _bllUsers.GetByUsernameAsync(obj.Username)).Id;
+            var bidderId = (await _bllUsers.GetByUsernameAsync(HttpContext.User.Identity.Name)).Id;
             var objEvent = await _bllEvents.GetAsync(obj.EventId);
-            var latestBid = await _bllBidHistories.GetLatestUserBid(bidderId, obj.AuctionId, obj.EventId);
+            var latestBid = await _bllBidHistories.GetLatestUserBid(obj.AuctionId, obj.EventId);
 
             //if latest bidder isn't our bidder (or if there are no bids yet), no need to use our processor any further and cause some unknown catastrophic error.
             if (latestBid == null || bidderId != latestBid.UserId) return null;
-            var throwbackBidHistory = await _bllWithdraws.GetThrowbackAsync(new BO.WithdrawHistory()
+            var throwbackBidHistory = await _bllWithdraws.GetThrowbackAsync(new BO.Withdrawals()
             {
                 UserId = bidderId,
                 AuctionId = obj.AuctionId,
                 EventId = obj.EventId
             });
-            if (throwbackBidHistory.UserId == 0 || throwbackBidHistory.BidAmount > objEvent.CurrentPrice) return null;
+            if (throwbackBidHistory == null || 
+                throwbackBidHistory.UserId == 0 ||
+                throwbackBidHistory.BidAmount > objEvent.CurrentPrice) 
+                return null;
             //update throwback details ( topBidder and currentPrice for throwback bidder ) of event.
-            var updatedEvent = new BO.Event()
+            var updatedEvent = new BO.Events()
             {
                 CurrentPrice = throwbackBidHistory.BidAmount,
                 Id = objEvent.Id,
@@ -186,13 +189,12 @@ namespace Auction.Areas.Bidder.Controllers
             };
 
             //Register withdraw history
-            var successWithdraw = await _bllWithdraws.AddAsync(new BO.WithdrawHistory()
+            var successWithdraw = await _bllWithdraws.AddAsync(new BO.Withdrawals()
             {
                 AuctionId = obj.AuctionId,
                 EventId = obj.EventId,
                 UserId = bidderId,
-                WithdrawAmount = latestBid.BidAmount,
-                WithdrawDate = DateTime.Now
+                WithdrawAmount = latestBid.BidAmount
             });
             var successEvent = await _bllEvents.UpdateAsync(updatedEvent);
             return Mapper.Event(updatedEvent);

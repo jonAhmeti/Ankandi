@@ -1,4 +1,4 @@
-﻿@model Item
+﻿@model Items
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
     ViewData["Title"] = Localizer["details"];
@@ -21,7 +21,7 @@
                 <h5>@Localizer["minPriceInc"]: @decimal.Truncate(ViewBag.Event.MinPriceIncrementAmount)€</h5><br />
                 <h5>@Localizer["currentPrice"]: <span id="CurrentPrice" class="badge-pill">@decimal.Truncate(ViewBag.Event.CurrentPrice)</span>€<span class="pl-4" id="updatedCurrentPrice" style="opacity: 0"><i class="fas fa-info-circle"></i></span></h5><br />
                 <span id="infoCurrentPrice" class="text-warning"></span>
-                <h5>@Localizer["amount"]: @Model.Amount @Model.MeasurementUnits</h5><br />
+                <h5>@Localizer["amount"]: @Model.Amount @Model.MeasurementUnit</h5><br />
                 <h5>@Localizer["details"]: @Model.Details</h5>
             </div>
         </div>

@@ -12,7 +12,7 @@ namespace Auction.Areas.Admin.Controllers
     [Route("Admin/Item")]
     public class ItemController : Controller
     {
-        private readonly Items _bllItems;
+        private readonly BLL.Items _bllItems;
 
         public ItemController(BLL.Items bllItems)
         {
@@ -25,19 +25,18 @@ namespace Auction.Areas.Admin.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(Item obj)
+        public async Task<IActionResult> Create(Models.Items obj)
         {
-            var result = await _bllItems.AddAsync(new BO.Item()
+            var result = await _bllItems.AddAsync(new BO.Items()
             {
                 Name = obj.Name,
                 StartPrice = obj.StartPrice,
-                MeasurementUnits = obj.MeasurementUnits,
+                MeasurementUnit = obj.MeasurementUnit,
                 Amount = obj.Amount,
                 SoldDate = obj.SoldDate,
                 SoldPrice = obj.SoldPrice,
                 Image = obj.Image,
-                Details = obj.Details,
-                InD = DateTime.Now
+                Details = obj.Details
             });
             return RedirectToAction("Index");
         }
@@ -50,17 +49,17 @@ namespace Auction.Areas.Admin.Controllers
         }
 
         [HttpPost("Edit")]
-        public async Task<IActionResult> Edit(Item obj)
+        public async Task<IActionResult> Edit(BO.Items obj)
         {
-            var result = await _bllItems.UpdateAsync(new BO.Item()
+            var result = await _bllItems.UpdateAsync(new BO.Items()
             {
                 Id = obj.Id,
                 Name = obj.Name,
                 StartPrice = obj.StartPrice,
-                MeasurementUnits = obj.MeasurementUnits,
+                MeasurementUnit = obj.MeasurementUnit,
                 Amount = obj.Amount,
                 SoldDate = obj.SoldDate,
-                SoldPrice = obj.SoldPrice,
+                SoldPrice = obj.SoldPrice == 0 ? null : obj.SoldPrice,
                 Image = obj.Image,
                 Details = obj.Details
             });

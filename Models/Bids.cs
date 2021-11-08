@@ -2,7 +2,7 @@
 
 namespace Auction.Models
 {
-    public class BidHistory
+    public class Bids
     {
         public int Id { get; set; }
         public DateTime BidDate { get; set; }

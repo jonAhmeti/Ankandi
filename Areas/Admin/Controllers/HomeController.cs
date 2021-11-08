@@ -11,19 +11,32 @@ namespace Auction.Areas.Admin.Controllers
     [Route("Admin")]
     public class HomeController : Controller
     {
-        private readonly BLL.BidHistories _bllBidHistories;
-        private readonly BLL.Withdraws _bllWithdrawHistories;
+        private readonly BLL.Bids _bllBidHistories;
+        private readonly BLL.Withdrawals _bllWithdrawHistories;
+        private readonly BLL.ActiveAuctions _bllActiveAuctions;
 
-        public HomeController(BLL.BidHistories bllBidHistories, BLL.Withdraws bllWithdrawHistories)
+        public HomeController(BLL.Bids bllBidHistories, BLL.Withdrawals bllWithdrawHistories, BLL.ActiveAuctions activeAuctions)
         {
             _bllBidHistories = bllBidHistories;
             _bllWithdrawHistories = bllWithdrawHistories;
+            _bllActiveAuctions = activeAuctions;
         }
         public async Task<IActionResult> Index()
         {
-            var historyBidWithdraw = new Dictionary<string, object>();
-            historyBidWithdraw["bids"] = Mapper.BidsMap(await _bllBidHistories.GetActiveAuctionBidHistory());
-            historyBidWithdraw["withdraws"] = Mapper.WithdrawsMap(await _bllWithdrawHistories.GetActiveAuctionWithdrawHistory());
+            var activeAcutions = Mapper.ActiveAuctionsMap(await _bllActiveAuctions.GetAllAsync());
+
+
+            var historyBidWithdraw = new Dictionary<string, object> { { "bids", new List<Bids>() }, { "withdrawals", new List<Withdrawals>() } };
+            foreach (var activeAuction in activeAcutions)
+            {
+                var bids = Mapper.BidsMap(await _bllBidHistories.GetActiveAuctionBidHistory(activeAuction.AuctionId));
+                var withdrawals = Mapper.WithdrawsMap(await _bllWithdrawHistories.GetActiveAuctionWithdrawHistory(activeAuction.AuctionId));
+                if (bids != null)
+                    ((List<Bids>)historyBidWithdraw["bids"]).AddRange(bids);
+                if (withdrawals != null)
+                    ((List<Withdrawals>)historyBidWithdraw["withdrawals"]).AddRange(withdrawals);
+            }
+            //historyBidWithdraw["withdraws"] = Mapper.WithdrawsMap(await _bllWithdrawHistories.GetActiveAuctionWithdrawHistory());
 
             return View(historyBidWithdraw);
         }

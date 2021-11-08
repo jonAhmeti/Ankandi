@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="auction" xml:space="preserve">
+  <data name="Auction" xml:space="preserve">
     <value>Ankandi</value>
   </data>
   <data name="ClickToLogin" xml:space="preserve">

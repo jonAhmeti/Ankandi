@@ -124,21 +124,21 @@
     <value>Ankand</value>
   </data>
   <data name="bidHistory" xml:space="preserve">
-    <value>Historiku i bidave</value>
+    <value>Ofertat</value>
   </data>
   <data name="date" xml:space="preserve">
     <value>Data</value>
   </data>
   <data name="event" xml:space="preserve">
-    <value>Event</value>
+    <value>Eventi</value>
   </data>
   <data name="item" xml:space="preserve">
-    <value>Produkt</value>
+    <value>Produkti</value>
   </data>
   <data name="user" xml:space="preserve">
-    <value>ID e bider</value>
+    <value>Id e ofertuesit</value>
   </data>
   <data name="withdrawHistory" xml:space="preserve">
-    <value>Historiku i tërheqjeve</value>
+    <value>Tërheqjet</value>
   </data>
 </root>

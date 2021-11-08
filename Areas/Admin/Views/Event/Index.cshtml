@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Event>
+﻿@model IEnumerable<Events>
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Index";
@@ -110,7 +110,7 @@
                             @{
                                 await Html.RenderPartialAsync(
                                     "EventPartial/_EventCreateForm",
-                                    new Event(),
+                                    new Events(),
                                     new ViewDataDictionary(ViewData));
                             }
                         </div>

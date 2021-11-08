@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Auction.BLL;
 using Auction.Models;
 using Microsoft.AspNetCore.Mvc;
-using AuctionData = Auction.BLL.AuctionData;
+using Auctions = Auction.BLL.Auctions;
 
 namespace Auction.Areas.Admin.Controllers
 {
@@ -13,11 +13,11 @@ namespace Auction.Areas.Admin.Controllers
     [Route("Admin/Event")]
     public class EventController : Controller
     {
-        private readonly Events _bllEvents;
-        private readonly Items _bllItems;
-        private readonly AuctionData _bllAuctionData;
+        private readonly BLL.Events _bllEvents;
+        private readonly BLL.Items _bllItems;
+        private readonly BLL.Auctions _bllAuctionData;
 
-        public EventController(BLL.Events bllEvents, BLL.Items bllItems, BLL.AuctionData bllAuctionData)
+        public EventController(BLL.Events bllEvents, BLL.Items bllItems, BLL.Auctions bllAuctionData)
         {
             _bllEvents = bllEvents;
             _bllItems = bllItems;
@@ -33,10 +33,10 @@ namespace Auction.Areas.Admin.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> Create(Event obj)
+        public async Task<IActionResult> Create(Models.Events obj)
         {
             var item = await _bllItems.GetAsync(obj.ItemId);
-            var result = await _bllEvents.AddAsync(new BO.Event()
+            var result = await _bllEvents.AddAsync(new BO.Events()
             {
                 StartDate = obj.StartDate,
                 EndDate = obj.EndDate,
@@ -52,7 +52,7 @@ namespace Auction.Areas.Admin.Controllers
         public async Task<PartialViewResult> Edit(int id)
         {
             var obj = await _bllEvents.GetAsync(id);
-            return PartialView("EventPartial/_EventEditForm", new Event()
+            return PartialView("EventPartial/_EventEditForm", new BO.Events()
             {
                 Id = obj.Id,
                 AuctionId = obj.AuctionId,
@@ -67,9 +67,9 @@ namespace Auction.Areas.Admin.Controllers
         }
 
         [HttpPost("Edit")]
-        public async Task<IActionResult> Edit(Event obj)
+        public async Task<IActionResult> Edit(BO.Events obj)
         {
-            var result = await _bllEvents.UpdateAsync(new BO.Event()
+            var result = await _bllEvents.UpdateAsync(new BO.Events()
             {
                 Id = obj.Id,
                 AuctionId = obj.AuctionId,

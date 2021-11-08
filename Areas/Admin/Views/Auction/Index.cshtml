@@ -1,5 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-@model IEnumerable<AuctionData>
+@model IEnumerable<Auctions>
 @{
     ViewData["Title"] = "Auction CRUD";
 }
@@ -107,7 +107,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <partial name="AuctionDataPartial/_AuctionDataCreateForm" model="@(new AuctionData()
+                            <partial name="AuctionDataPartial/_AuctionDataCreateForm" model="@(new Auctions()
                               {
                                   StartDate = DateTime.Now,
                                   EndDate = DateTime.Now.AddDays(1)

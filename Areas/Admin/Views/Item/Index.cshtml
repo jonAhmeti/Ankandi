@@ -1,5 +1,5 @@
 ﻿@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
-@model IEnumerable<Item>
+@model IEnumerable<Items>
 @{
     ViewData["Title"] = "Index";
 }
@@ -75,7 +75,7 @@
                             <td>@Html.DisplayFor(m => item.Id)</td>
                             <td>@Html.DisplayFor(m => item.Name)</td>
                             <td>@Html.DisplayFor(m => item.StartPrice)</td>
-                            <td>@(item.SoldPrice == null ? "Not sold" : item.SoldPrice.ToString())</td>
+                            <td>@(item.SoldPrice == 0 ? "Not sold" : item.SoldPrice.ToString())</td>
                             <td>
                                 <div class="crud-div d-flex align-items-stretch w-100 justify-content-center">
                                     <div class="w-100 d-flex align-items-center justify-content-center edit-modal-btn" data-id="@item.Id">
@@ -107,7 +107,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <partial name="ItemPartial/_ItemCreateForm" model="@(new Item()
+                            <partial name="ItemPartial/_ItemCreateForm" model="@(new Items()
                                                                                {
 
                                                                                })" />

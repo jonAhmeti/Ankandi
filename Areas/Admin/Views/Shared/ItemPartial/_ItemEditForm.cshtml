@@ -1,4 +1,4 @@
-﻿@model Item
+﻿@model Items
 @inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer Localizer
 
 <form asp-action="Edit" method="post" class="form-group col">
@@ -26,7 +26,7 @@
         <!--Item measurement units and amount-->
         <div class="w-auto col col-6">
             <label class="form-control-plaintext">@Localizer["measurementUnits"]</label>
-            <input asp-for="MeasurementUnits" name="MeasurementUnits" placeholder="piece, kg, liter, cm..." class="form-control" />
+            <input asp-for="MeasurementUnit" name="MeasurementUnit" placeholder="piece, kg, liter, cm..." class="form-control" maxlength="10"/>
         </div>
         <div class="w-auto col col-6">
             <label class="form-control-plaintext">@Localizer["amount"]</label>
