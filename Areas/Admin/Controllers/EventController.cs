@@ -52,7 +52,7 @@ namespace Auction.Areas.Admin.Controllers
         public async Task<PartialViewResult> Edit(int id)
         {
             var obj = await _bllEvents.GetAsync(id);
-            return PartialView("EventPartial/_EventEditForm", new BO.Events()
+            return PartialView("EventPartial/_EventEditForm", new Models.Events()
             {
                 Id = obj.Id,
                 AuctionId = obj.AuctionId,
@@ -85,6 +85,7 @@ namespace Auction.Areas.Admin.Controllers
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(int id)
         {
+            //it won't delete if you have bids or withdrawals within that event.
             await _bllEvents.DeleteAsync(id);
             return RedirectToAction("Index");
         }

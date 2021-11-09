@@ -158,39 +158,44 @@
                             @{
                                 if (ViewBag.Auctions == null)
                                 {
-                                                        <h5><i class="fas fa-info-circle text-info"></i> @Localizer["noAuctionsActive1"]<strong> @Localizer["noAuctionsActive2"]</strong> @Localizer["noAuctionsActive3"]</h5>
+                                    <h5><i class="fas fa-info-circle text-info"></i> @Localizer["noAuctionsActive1"]<strong> @Localizer["noAuctionsActive2"]</strong> @Localizer["noAuctionsActive3"]</h5>
                                 }
                                 else
                                 {
-                                    <!--Active Auction Info-->
-                                    <div class="form-group row">
-                                        <div class="col">
-                                            <h6>@Localizer["currentActiveAuction"]</h6>
-                                            <p>
-                                                Id: @ViewBag.ActiveAuction.Id<br />
-                                                @Localizer["date"]: @ViewBag.ActiveAuction.StartDate - @ViewBag.ActiveAuction.EndDate
-                                            </p>
+                                    if (ViewBag.Auction.Id != 0)
+                                    {
+                                        <!--Active Auction Info-->
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <h6>@Localizer["currentActiveAuction"]</h6>
+                                                <p>
+                                                    Id: @ViewBag.Auction.Id<br />
+                                                    @Localizer["date"]: @ViewBag.Auction.StartDate - @ViewBag.Auction.EndDate<br />
+                                                    Open: @ViewBag.ActiveAuction.Open
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!--Open/Close Current Active Auction-->
-                                    <hr />
-                                    <div class="form-group row">
-                                        <div class="col">
-                                            <label><i class="fas fa-info-circle text-info"></i> @Localizer["hereOpenClose"]</label>
-                                            <div class="row row-cols-2 justify-content-around">
-                                                <div class="col col-auto">
-                                                    <a class="btn btn-primary" id="open">@Localizer["open"]</a>
-                                                    <br />
-                                                    <label id="openResult"></label>
-                                                </div>
-                                                <div class="col col-auto">
-                                                    <a class="btn btn-danger" id="close">@Localizer["close"]</a>
-                                                    <br />
-                                                    <label id="closeResult"></label>
+                                        <!--Open/Close Current Active Auction-->
+                                        <hr />
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <label><i class="fas fa-info-circle text-info"></i> @Localizer["hereOpenClose"]</label>
+                                                <div class="row row-cols-2 justify-content-around">
+                                                    <div class="col col-auto">
+                                                        <a class="btn btn-primary" id="open">@Localizer["open"]</a>
+                                                        <br />
+                                                        <label id="openResult"></label>
+                                                    </div>
+                                                    <div class="col col-auto">
+                                                        <a class="btn btn-danger" id="close">@Localizer["close"]</a>
+                                                        <br />
+                                                        <label id="closeResult"></label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
+
                                     <!--Change Current Active Auction-->
                                     <hr />
                                     <div class="form-group row">

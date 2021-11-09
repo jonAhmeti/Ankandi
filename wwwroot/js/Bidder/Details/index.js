@@ -53,7 +53,6 @@
                         url: "/Bidder/GetEventDetails",
                         data: {
                             id: response.id,
-                            username: $("#dropdownProfile").text().trim(),
                             price: response.currentPrice
                         },
                         success: function (response) {

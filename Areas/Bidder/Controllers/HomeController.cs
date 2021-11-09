@@ -66,19 +66,15 @@ namespace Auction.Areas.Bidder.Controllers
         [HttpGet("GetActiveAuctionDetails")]
         public async Task<Dictionary<string, object>> GetActiveAuctionDetails()
         {
-            var activeAuctions = (await _bllActiveAuctions.GetAllAsync());
-            var activeEvents = new List<Events>();
-            foreach (var activeAuction in activeAuctions)
-            {
-                activeEvents.AddRange(Mapper.EventsMap(await _bllEvents.GetAllByAuctionId(activeAuction.AuctionId)));
-            }
+            var activeAuction = (await _bllActiveAuctions.GetAllAsync()).FirstOrDefault();
+            var activeEvents = (await _bllEvents.GetAllByAuctionId(activeAuction.AuctionId));
             var items = new List<Items>();
             foreach (var objEvent in activeEvents)
             {
                 items.Add(Mapper.Item(await _bllItems.GetAsync(objEvent.ItemId)));
             }
 
-            if (activeAuctions.Count() == 0 || activeEvents.Count() == 0 || items == null) // RE-check
+            if (activeAuction == null || activeAuction.Open == false || items.Count <= 0) // RE-check
             {
                 return new Dictionary<string, object>()
                 {
@@ -97,9 +93,15 @@ namespace Auction.Areas.Bidder.Controllers
 
         //Method that returns the event object when 'Details' of an event/item is clicked in the bidder's home.
         [HttpGet("GetEventDetails")]
-        public async Task<Events> GetEventDetails(int id, string username = "")
+        public async Task<Events> GetEventDetails(int id)
         {
             var objEvent = Mapper.Event(await _bllEvents.GetAsync(id));
+            int activeAuctionId = (await _bllActiveAuctions.GetAllAsync()).FirstOrDefault().AuctionId;
+
+            //get top bidder for selected event in active auction
+            objEvent.TopBidder = (await _bllBidHistories.GetTopBidderActiveEvent(activeAuctionId, id)).FirstOrDefault().UserId;
+
+            string username = HttpContext.User.Identity.Name;
             if (string.IsNullOrWhiteSpace(username))
             {
                 return objEvent;
@@ -116,7 +118,7 @@ namespace Auction.Areas.Bidder.Controllers
         [HttpPost("Bid")]
         public async Task<Events> Bid(Bids obj)
         {
-            var bidderId = (await _bllUsers.GetByUsernameAsync(obj.Username)).Id;
+            var bidderId = (await _bllUsers.GetByUsernameAsync(HttpContext.User.Identity.Name)).Id;
             var objEvent = await GetEventDetails(obj.EventId);
             
             //if bidAmount has changed before refreshing on the user's screen and is smaller than other biders' bid then return null

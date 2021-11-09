@@ -12,7 +12,7 @@ namespace Auction.Models
         {
             if (list == null) return null;
 
-            var mappedList = list.Select(obj => new Auctions()
+            var mappedList = list.Select(obj => new Models.Auctions()
             {
                 Id = obj.Id,
                 StartDate = DateTime.Parse(obj.StartDate.ToString()),

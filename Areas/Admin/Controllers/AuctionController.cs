@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Auction.Models;
 using Microsoft.AspNetCore.Mvc;
+
 using Auctions = Auction.Models.Auctions;
 
 namespace Auction.Areas.Admin.Controllers
@@ -12,19 +14,24 @@ namespace Auction.Areas.Admin.Controllers
     {
         private readonly BLL.Auctions _bllAuctionData;
         private readonly BLL.ActiveAuctions _bllActiveAuction;
+        private readonly BLL.Users _bllUsers;
 
-        public AuctionController(BLL.Auctions bllAuctionData, BLL.ActiveAuctions bllActiveAuction)
+        public AuctionController(BLL.Auctions bllAuctionData, BLL.ActiveAuctions bllActiveAuction, BLL.Users bllUsers)
         {
             _bllAuctionData = bllAuctionData;
             _bllActiveAuction = bllActiveAuction;
+            _bllUsers = bllUsers;
         }
 
         public async Task<IActionResult> Index()
         {
             var auctions = await _bllAuctionData.GetAllAsync();
             ViewBag.Auctions = auctions;
-            ViewBag.ActiveAuctionInfo = await _bllActiveAuction.GetAllAsync();
-            ViewBag.ActiveAuction = await _bllAuctionData.GetAsync(ViewBag.ActiveAuctionInfo[0].AuctionId);
+            ViewBag.ActiveAuction = Mapper.ActiveAuctionsMap(await _bllActiveAuction.GetAllAsync()).FirstOrDefault();
+
+            ViewBag.Auction = (ViewBag.ActiveAuction == null) ? new Auctions()
+                : await _bllAuctionData.GetAsync(ViewBag.ActiveAuction.AuctionId);
+
             return View(Mapper.AuctionDataMap(auctions));
         }
 
@@ -66,6 +73,7 @@ namespace Auction.Areas.Admin.Controllers
         [HttpDelete("Delete")]
         public async Task<IActionResult> Delete(int id)
         {
+            // Doesn't delete if there's Events, Bids or Withdrawals within an auction
             await _bllAuctionData.DeleteAsync(id);
             return RedirectToAction("Index");
         }
@@ -73,6 +81,7 @@ namespace Auction.Areas.Admin.Controllers
         [HttpPost("SetActive")]
         public async Task<IActionResult> SetActive(int id)
         {
+            int userId = (await _bllUsers.GetByUsernameAsync(HttpContext.User.Identity.Name)).Id;
             if (id <= 0) return RedirectToAction("Index");
 
             //Delete Current Active Auction From Database
@@ -80,20 +89,22 @@ namespace Auction.Areas.Admin.Controllers
 
             //Add Selected Active Auction To DB
             var successAdd = await _bllActiveAuction.AddAsync(new BO.ActiveAuctions()
-                {AuctionId = id, Open = false, ClosedBy = 1, OpenedBy = 1});
+                {AuctionId = id, Open = false, ClosedBy = userId, OpenedBy = userId});
             return RedirectToAction("Index");
         }
 
         [HttpPost("Open")]
         public async Task<bool> Open()
         {
-            return await _bllActiveAuction.Open();
+            int userId = (await _bllUsers.GetByUsernameAsync(HttpContext.User.Identity.Name)).Id;
+            return await _bllActiveAuction.Open(userId);
         }
 
         [HttpPost("Close")]
         public async Task<bool> Close()
         {
-            return await _bllActiveAuction.Close();
+            int userId = (await _bllUsers.GetByUsernameAsync(HttpContext.User.Identity.Name)).Id;
+            return await _bllActiveAuction.Close(userId);
         }
     }
 }

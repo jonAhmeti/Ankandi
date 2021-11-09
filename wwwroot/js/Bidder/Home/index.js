@@ -62,7 +62,7 @@
                         .image}">
                                         <div class="card-body">
                                             <h4 class="card-title" style="font-weight:bold;">${objItem.name}</h5>
-                                            <h6 style="color:#00A8E8;font-weight:bold;margin:0;">Current price:<span id="currentPrice_${
+                                            <h6 style="color:#00A8E8;font-weight:bold;margin:0;">Current price:<span class="rounded" id="currentPrice_${
                         iterator}"> ${
                         objEventDetails.currentPrice}</span>€<span id="infoCurrentPrice"></span></h6>
                                             <h7 style="color:#294D4A;">Start price: ${objItem.startPrice}</h7>
@@ -143,17 +143,19 @@
                         $($(minimumBidBtns)[i]).off();
                         $(minimumBidBtns[i]).on("click",
                             function () {
+
                                 $.ajax({
                                     type: "POST",
                                     url: "/Bidder/Bid",
                                     data: {
                                         auctionId: response.events[i].auctionId,
                                         eventId: response.events[i].id,
-                                        bidAmount: response.events[i].currentPrice + response.events[i].minPriceIncrementAmount,
-                                        username: $("#dropdownProfile").text().trim()
+                                        bidAmount: response.events[i].currentPrice + response.events[i].minPriceIncrementAmount
                                     },
                                     success: function (response) {
                                         if (response.priceChanged) {
+
+
                                             $("#currentPrice_" + i).text(` ${response.currentPrice}`);
                                             $("#currentPrice_" + i).css({ "background-color": "rgba(255,255,0,.7)" });
                                             $("#currentPrice_" + i).animate({ backgroundColor: "rgba(255,255,0,0)" }, 1500);
@@ -219,8 +221,7 @@
                                                     auctionId: response.events[i].auctionId,
                                                     eventId: response.events[i].id,
                                                     bidAmount: response.events[i].currentPrice +
-                                                        response.events[i].minPriceIncrementAmount,
-                                                    username: $("#dropdownProfile").text().trim()
+                                                        response.events[i].minPriceIncrementAmount
                                                 },
                                                 success: function (response) {
                                                     if (response.priceChanged) {
@@ -265,8 +266,7 @@
                                                 data: {
                                                     auctionId: response.events[i].auctionId,
                                                     eventId: response.events[i].id,
-                                                    bidAmount: response.events[i].currentPrice + response.events[i].minPriceIncrementAmount,
-                                                    username: $("#dropdownProfile").text().trim()
+                                                    bidAmount: response.events[i].currentPrice + response.events[i].minPriceIncrementAmount
                                                 },
                                                 success: function (response) {
                                                     if (response.priceChanged) {
