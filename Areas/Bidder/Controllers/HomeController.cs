@@ -98,17 +98,20 @@ namespace Auction.Areas.Bidder.Controllers
             var objEvent = Mapper.Event(await _bllEvents.GetAsync(id));
             int activeAuctionId = (await _bllActiveAuctions.GetAllAsync()).FirstOrDefault().AuctionId;
 
-            //get top bidder for selected event in active auction
-            objEvent.TopBidder = (await _bllBidHistories.GetTopBidderActiveEvent(activeAuctionId, id)).FirstOrDefault().UserId;
-
             string username = HttpContext.User.Identity.Name;
+
             if (string.IsNullOrWhiteSpace(username))
             {
                 return objEvent;
             }
 
             var bidderId = (await _bllUsers.GetByUsernameAsync(username)).Id;
-            if (objEvent.TopBidder == bidderId) return objEvent;
+
+            //get top bidder for selected event in active auction that is NOT our bidder
+            objEvent.TopBidder = (await _bllBidHistories.GetLatestUserBid(activeAuctionId, id)).FirstOrDefault().UserId;
+
+
+            if (objEvent.TopBidder == null || objEvent.TopBidder == bidderId) return objEvent;
 
             objEvent.PriceChanged = true;
             return objEvent;
@@ -162,10 +165,10 @@ namespace Auction.Areas.Bidder.Controllers
         {
             var bidderId = (await _bllUsers.GetByUsernameAsync(HttpContext.User.Identity.Name)).Id;
             var objEvent = await _bllEvents.GetAsync(obj.EventId);
-            var latestBid = await _bllBidHistories.GetLatestUserBid(obj.AuctionId, obj.EventId);
+            var latestBid = (await _bllBidHistories.GetTopBidderActiveEvent(obj.AuctionId, obj.EventId, bidderId)).FirstOrDefault();
 
-            //if latest bidder isn't our bidder (or if there are no bids yet), no need to use our processor any further and cause some unknown catastrophic error.
-            if (latestBid == null || bidderId != latestBid.UserId) return null;
+            //if latest bidder is our bidder (or if there are no bids yet)
+            if (latestBid == null || bidderId == latestBid.UserId) return null;
             var throwbackBidHistory = await _bllWithdraws.GetThrowbackAsync(new BO.Withdrawals()
             {
                 UserId = bidderId,
@@ -198,6 +201,9 @@ namespace Auction.Areas.Bidder.Controllers
                 UserId = bidderId,
                 WithdrawAmount = latestBid.BidAmount
             });
+
+            //Reverse Withdraw by setting highest OTHER user's bid as latest by biddate.
+            await _bllBidHistories.AddAsync(throwbackBidHistory);
             var successEvent = await _bllEvents.UpdateAsync(updatedEvent);
             return Mapper.Event(updatedEvent);
         }
