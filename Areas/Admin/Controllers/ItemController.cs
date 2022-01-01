@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Auction.BLL;
 using Auction.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Auction.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Route("Admin/Item")]
+    [Authorize(Roles = "Admin")]
     public class ItemController : Controller
     {
         private readonly BLL.Items _bllItems;
