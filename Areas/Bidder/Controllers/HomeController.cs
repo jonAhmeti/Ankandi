@@ -108,8 +108,9 @@ namespace Auction.Areas.Bidder.Controllers
             var bidderId = (await _bllUsers.GetByUsernameAsync(username)).Id;
 
             //get top bidder for selected event in active auction that is NOT our bidder
-            objEvent.TopBidder = (await _bllBidHistories.GetLatestUserBid(activeAuctionId, id)).FirstOrDefault().UserId;
-
+            var topBidderUser = (await _bllBidHistories.GetLatestUserBid(activeAuctionId, id)).FirstOrDefault();
+            if (topBidderUser != null)
+                objEvent.TopBidder = topBidderUser.UserId;
 
             if (objEvent.TopBidder == null || objEvent.TopBidder == bidderId) return objEvent;
 
